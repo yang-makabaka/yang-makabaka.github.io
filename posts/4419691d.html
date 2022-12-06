@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ThoroughPyTorch——5 | Mariana</title><meta name="keywords" content="笔记"><meta name="author" content="Yang.f.z."><meta name="copyright" content="Yang.f.z."><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="PyTorch生态与部署 1.PyTorch生态简介https:&#x2F;&#x2F;datawhalechina.github.io&#x2F;thorough-pytorch&#x2F;第八章&#x2F;index.html PyTorch的强大很大程度上取决于它的生态。 （1）torchvision    torchvision.datasets * 包含了一些我们在计算机视觉中常见的数据集     torchvision.models">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThoroughPyTorch——5">
+<meta property="og:url" content="https://yang-makabaka.github.io/posts/4419691d.html">
+<meta property="og:site_name" content="Mariana">
+<meta property="og:description" content="PyTorch生态与部署 1.PyTorch生态简介https:&#x2F;&#x2F;datawhalechina.github.io&#x2F;thorough-pytorch&#x2F;第八章&#x2F;index.html PyTorch的强大很大程度上取决于它的生态。 （1）torchvision    torchvision.datasets * 包含了一些我们在计算机视觉中常见的数据集     torchvision.models">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yang-makabaka.github.io/source/img/back1.png">
+<meta property="article:published_time" content="2022-11-27T09:57:52.000Z">
+<meta property="article:modified_time" content="2022-11-27T09:59:34.816Z">
+<meta property="article:author" content="Yang.f.z.">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yang-makabaka.github.io/source/img/back1.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yang-makabaka.github.io/posts/4419691d"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#425aef"/><link rel="apple-touch-icon" sizes="180x180" href="/img/siteicon/128.png"/><link rel="icon" type="image/png" sizes="32x32" href="/img/siteicon/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/img/siteicon/16.png"/><link rel="mask-icon" href="/img/siteicon/128.png" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ThoroughPyTorch——5',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-27 17:59:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Mariana" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/touxiang.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/source/img/back1.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Mariana</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ThoroughPyTorch——5</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-27T09:57:52.000Z" title="发表于 2022-11-27 17:57:52">2022-11-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-27T09:59:34.816Z" title="更新于 2022-11-27 17:59:34">2022-11-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ThoroughPyTorch——5"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="PyTorch生态与部署"><a href="#PyTorch生态与部署" class="headerlink" title=" PyTorch生态与部署 "></a><center> PyTorch生态与部署 </center></h1><h1 id="1-PyTorch生态简介"><a href="#1-PyTorch生态简介" class="headerlink" title="1.PyTorch生态简介"></a>1.PyTorch生态简介</h1><p><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/第八章/index.html">https://datawhalechina.github.io/thorough-pytorch/第八章/index.html</a></p>
+<p>PyTorch的强大很大程度上取决于它的生态。</p>
+<h2 id="（1）torchvision"><a href="#（1）torchvision" class="headerlink" title="（1）torchvision"></a>（1）torchvision</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>torchvision.datasets *</strong></th>
+<th><strong>包含了一些我们在计算机视觉中常见的数据集</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>torchvision.models *</td>
+<td>提供一些预训练模型</td>
+</tr>
+<tr>
+<td><strong>torchvision.tramsforms *</strong></td>
+<td><strong>用于数据增强和处理</strong></td>
+</tr>
+<tr>
+<td>torchvision.io</td>
+<td>视频、图片和文件的 IO 操作（读取、写入、编解码）</td>
+</tr>
+<tr>
+<td><strong>torchvision.ops</strong></td>
+<td><a target="_blank" rel="noopener" href="https://pytorch.org/vision/stable/ops.html"><strong>提供了许多计算机视觉的特定操作</strong></a></td>
+</tr>
+<tr>
+<td>torchvision.utils</td>
+<td><a target="_blank" rel="noopener" href="https://pytorch.org/vision/stable/utils.html">提供了一些可视化的方法</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="（2）PyTorchVideo"><a href="#（2）PyTorchVideo" class="headerlink" title="（2）PyTorchVideo"></a>（2）PyTorchVideo</h2><p>PytorchVideo 提供了加速视频理解研究所需的模块化和高效的API。它还支持不同的深度学习视频组件，如视频模型、视频数据集和视频特定转换，最重要的是，PytorchVideo也提供了model zoo，使得人们可以使用各种先进的预训练视频模型及其评判基准。</p>
+<p>基于 PyTorch，高质量model zoo，支持主流数据集及预处理，模块化设计，支持多模态，移动端部署优化</p>
+<h2 id="（3）torchtext"><a href="#（3）torchtext" class="headerlink" title="（3）torchtext"></a>（3）torchtext</h2><ul>
+<li>数据处理工具 torchtext.data.functional、torchtext.data.utils</li>
+<li>数据集 torchtext.data.datasets</li>
+<li>词表工具 torchtext.vocab</li>
+<li>评测指标 torchtext.metrics</li>
+</ul>
+<h4 id="构建数据集"><a href="#构建数据集" class="headerlink" title="构建数据集"></a>构建数据集</h4><ul>
+<li><strong>Field及其使用</strong></li>
+</ul>
+<p>①构建Field</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tokenize = lambda x: x.split()</span><br><span class="line">TEXT = data.Field(sequential=True, tokenize=tokenize, lower=True, fix_length=200)</span><br><span class="line">LABEL = data.Field(sequential=False, use_vocab=False)</span><br></pre></td></tr></table></figure>
+<p>②进一步构建dataset</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from torchtext import data</span><br><span class="line">def get_dataset(csv_data, text_field, label_field, test=False):</span><br><span class="line">    fields = [(&quot;id&quot;, None), # we won&#x27;t be needing the id, so we pass in None as the field</span><br><span class="line">                 (&quot;comment_text&quot;, text_field), (&quot;toxic&quot;, label_field)]       </span><br><span class="line">    examples = []</span><br><span class="line"></span><br><span class="line">    if test:</span><br><span class="line">        # 如果为测试集，则不加载label</span><br><span class="line">        for text in tqdm(csv_data[&#x27;comment_text&#x27;]):</span><br><span class="line">            examples.append(data.Example.fromlist([None, text, None], fields))</span><br><span class="line">    else:</span><br><span class="line">        for text, label in tqdm(zip(csv_data[&#x27;comment_text&#x27;], csv_data[&#x27;toxic&#x27;])):</span><br><span class="line">            examples.append(data.Example.fromlist([None, text, label], fields))</span><br><span class="line">    return examples, fields</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">train_data = pd.read_csv(&#x27;train_toxic_comments.csv&#x27;)</span><br><span class="line">valid_data = pd.read_csv(&#x27;valid_toxic_comments.csv&#x27;)</span><br><span class="line">test_data = pd.read_csv(&quot;test_toxic_comments.csv&quot;)</span><br><span class="line">TEXT = data.Field(sequential=True, tokenize=tokenize, lower=True)</span><br><span class="line">LABEL = data.Field(sequential=False, use_vocab=False)</span><br><span class="line"></span><br><span class="line"># 得到构建Dataset所需的examples和fields</span><br><span class="line">train_examples, train_fields = get_dataset(train_data, TEXT, LABEL)</span><br><span class="line">valid_examples, valid_fields = get_dataset(valid_data, TEXT, LABEL)</span><br><span class="line">test_examples, test_fields = get_dataset(test_data, TEXT, None, test=True)</span><br><span class="line"># 构建Dataset数据集</span><br><span class="line">train = data.Dataset(train_examples, train_fields)</span><br><span class="line">valid = data.Dataset(valid_examples, valid_fields)</span><br><span class="line">test = data.Dataset(test_examples, test_fields)</span><br><span class="line"></span><br><span class="line"># 检查keys是否正确</span><br><span class="line">print(train[0].__dict__.keys())</span><br><span class="line">print(test[0].__dict__.keys())</span><br><span class="line"># 抽查内容是否正确</span><br><span class="line">print(train[0].comment_text)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>词汇表（vocab）</strong></li>
+</ul>
+<p>构建词语到向量（或数字）的映射关系</p>
+<p>在torchtext中可以使用Field自带的build_vocab函数完成词汇表构建。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TEXT.build_vocab(train)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>数据迭代器</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from torchtext.data import Iterator, BucketIterator</span><br><span class="line"># 若只针对训练集构造迭代器</span><br><span class="line"># train_iter = data.BucketIterator(dataset=train, batch_size=8, shuffle=True, sort_within_batch=False, repeat=False)</span><br><span class="line"></span><br><span class="line"># 同时对训练集和验证集进行迭代器的构建</span><br><span class="line">train_iter, val_iter = BucketIterator.splits(</span><br><span class="line">        (train, valid), # 构建数据集所需的数据集</span><br><span class="line">        batch_sizes=(8, 8),</span><br><span class="line">        device=-1, # 如果使用gpu，此处将-1更换为GPU的编号</span><br><span class="line">        sort_key=lambda x: len(x.comment_text), # the BucketIterator needs to be told what function it should use to group the data.</span><br><span class="line">        sort_within_batch=False</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">test_iter = Iterator(test, batch_size=8, device=-1, sort=False, sort_within_batch=False)</span><br></pre></td></tr></table></figure>
+<h1 id="2-PyTorch模型部署"><a href="#2-PyTorch模型部署" class="headerlink" title="2.PyTorch模型部署"></a>2.PyTorch模型部署</h1><p><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/第九章/index.html">https://datawhalechina.github.io/thorough-pytorch/第九章/index.html</a></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://niuzhikang.oss-cn-chengdu.aliyuncs.com/figures/202208052139305.jpg" alt="微信图片_20220805213616"></p>
+<h2 id="ONNX"><a href="#ONNX" class="headerlink" title="ONNX"></a>ONNX</h2><h4 id="（1）ONNX简介"><a href="#（1）ONNX简介" class="headerlink" title="（1）ONNX简介"></a>（1）ONNX简介</h4><p>①ONNX</p>
+<ul>
+<li>ONNX官网：<a target="_blank" rel="noopener" href="https://onnx.ai/">https://onnx.ai/</a></li>
+<li>ONNX GitHub：<a target="_blank" rel="noopener" href="https://github.com/onnx/onnx">https://github.com/onnx/onnx</a></li>
+</ul>
+<p>通过定义一组与环境和平台无关的标准格式，使AI模型可以在不同框架和环境下交互使用。</p>
+<p>使用不同框架训练的模型，转化为ONNX格式后，可以很容易的部署在兼容ONNX的运行环境中。</p>
+<p>②ONNX Runtime</p>
+<ul>
+<li>ONNX Runtime官网：<a target="_blank" rel="noopener" href="https://www.onnxruntime.ai/">https://www.onnxruntime.ai/</a></li>
+<li>ONNX Runtime GitHub：<a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime">https://github.com/microsoft/onnxruntime</a></li>
+</ul>
+<p>跨平台机器学习推理加速器，可直接读取 .onnx 格式的文件。</p>
+<p>③安装</p>
+<p>ONNX和ONNX Runtime的适配关系：<a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/blob/master/docs/Versioning.md">https://github.com/microsoft/onnxruntime/blob/master/docs/Versioning.md</a></p>
+<p>使用GPU进行推理时，需要卸载onnxruntime，再安装onnxruntime-gpu，同时还需考虑ONNX Runtime与CUDA之间的适配关系，<a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/execution-providers/CUDA-ExecutionProvider.html">参考链接</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 激活虚拟环境</span><br><span class="line">conda activate env_name # env_name换成环境名称</span><br><span class="line"># 安装onnx</span><br><span class="line">pip install onnx </span><br><span class="line"># 安装onnx runtime</span><br><span class="line">pip install onnxruntime # 使用CPU进行推理</span><br><span class="line"># pip install onnxruntime-gpu # 使用GPU进行推理</span><br></pre></td></tr></table></figure>
+<h4 id="（2）模型导出为ONNX"><a href="#（2）模型导出为ONNX" class="headerlink" title="（2）模型导出为ONNX"></a>（2）模型导出为ONNX</h4><p>使用<code>torch.onnx.export()</code>把模型转换成 ONNX 格式的函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import torch.onnx </span><br><span class="line"># 转换的onnx格式的名称，文件后缀需为.onnx</span><br><span class="line">onnx_file_name = &quot;xxxxxx.onnx&quot;</span><br><span class="line"># 我们需要转换的模型，将torch_model设置为自己的模型</span><br><span class="line">model = torch_model</span><br><span class="line"># 加载权重，将model.pth转换为自己的模型权重</span><br><span class="line"># 如果模型的权重是使用多卡训练出来，我们需要去除权重中多的module. 具体操作可以见5.4节</span><br><span class="line">model = model.load_state_dict(torch.load(&quot;model.pth&quot;))</span><br><span class="line"># 导出模型前，必须调用model.eval()或者model.train(False)</span><br><span class="line">model.eval()</span><br><span class="line"># dummy_input就是一个输入的实例，仅提供输入shape、type等信息 </span><br><span class="line">batch_size = 1 # 随机的取值，当设置dynamic_axes后影响不大</span><br><span class="line">dummy_input = torch.randn(batch_size, 1, 224, 224, requires_grad=True) </span><br><span class="line"># 这组输入对应的模型输出</span><br><span class="line">output = model(dummy_input)</span><br><span class="line"># 导出模型（需确保我们的模型处在推理模式）</span><br><span class="line">torch.onnx.export(model,        # 模型的名称</span><br><span class="line">                  dummy_input,   # 一组实例化输入</span><br><span class="line">                  onnx_file_name,   # 文件保存路径/名称</span><br><span class="line">                  export_params=True,        #  如果指定为True或默认, 参数也会被导出. 如果你要导出一个没训练过的就设为 False.</span><br><span class="line">                  opset_version=10,          # ONNX 算子集的版本，当前已更新到15</span><br><span class="line">                  do_constant_folding=True,  # 是否执行常量折叠优化</span><br><span class="line">                  input_names = [&#x27;input&#x27;],   # 输入模型的张量的名称</span><br><span class="line">                  output_names = [&#x27;output&#x27;], # 输出模型的张量的名称</span><br><span class="line">                  # dynamic_axes将batch_size的维度指定为动态，</span><br><span class="line">                  # 后续进行推理的数据可以与导出的dummy_input的batch_size不同</span><br><span class="line">                  dynamic_axes=&#123;&#x27;input&#x27; : &#123;0 : &#x27;batch_size&#x27;&#125;,    </span><br><span class="line">                                &#x27;output&#x27; : &#123;0 : &#x27;batch_size&#x27;&#125;&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="（3）可用性检查"><a href="#（3）可用性检查" class="headerlink" title="（3）可用性检查"></a>（3）可用性检查</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import onnx</span><br><span class="line"># 我们可以使用异常处理的方法进行检验</span><br><span class="line">try:</span><br><span class="line">    # 当我们的模型不可用时，将会报出异常</span><br><span class="line">    onnx.checker.check_model(self.onnx_model)</span><br><span class="line">except onnx.checker.ValidationError as e:</span><br><span class="line">    print(&quot;The model is invalid: %s&quot;%e)</span><br><span class="line">else:</span><br><span class="line">    # 模型可用时，将不会报出异常，并会输出“The model is valid!”</span><br><span class="line">    print(&quot;The model is valid!&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="（4）可视化"><a href="#（4）可视化" class="headerlink" title="（4）可视化"></a>（4）可视化</h4><p><strong>Netron</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://datawhalechina.github.io/thorough-pytorch/_images/screenshot.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yang-makabaka.github.io">Yang.f.z.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yang-makabaka.github.io/posts/4419691d.html">https://yang-makabaka.github.io/posts/4419691d.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yang-makabaka.github.io" target="_blank">Mariana</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a></div><div class="post_share"><div class="social-share" data-image="/source/img/back1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/549a771b.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://robertinit.com/wp-content/uploads/2021/04/ubuntu-logo-1200x884-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Ubuntu22.04安装</div></div></a></div><div class="next-post pull-right"><a href="/posts/2b2f8273.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ThoroughPytorch——4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/787ba630.html" title="Pytorch基础"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-15</div><div class="title">Pytorch基础</div></div></a></div><div><a href="/posts/5b4576fc.html" title="ThoroughPytorch——1"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-19</div><div class="title">ThoroughPytorch——1</div></div></a></div><div><a href="/posts/8987048d.html" title="ThoroughPytorch——2"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">ThoroughPytorch——2</div></div></a></div><div><a href="/posts/b54b17d0.html" title="ThoroughPytorch——3"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-23</div><div class="title">ThoroughPytorch——3</div></div></a></div><div><a href="/posts/2b2f8273.html" title="ThoroughPytorch——4"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-25</div><div class="title">ThoroughPytorch——4</div></div></a></div><div><a href="/posts/d048e11d.html" title="吃瓜教程-P2"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://z4a.net/images/2022/10/27/1B4D9886-68EF-4651-9902-9C0E16226631.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">吃瓜教程-P2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/touxiang.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yang.f.z.</div><div class="author-info__description">一起去码头搞点薯条吗</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yang-makabaka"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">博客建设中...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PyTorch%E7%94%9F%E6%80%81%E4%B8%8E%E9%83%A8%E7%BD%B2"><span class="toc-number">1.</span> <span class="toc-text"> PyTorch生态与部署 </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-PyTorch%E7%94%9F%E6%80%81%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">1.PyTorch生态简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%881%EF%BC%89torchvision"><span class="toc-number">2.1.</span> <span class="toc-text">（1）torchvision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%882%EF%BC%89PyTorchVideo"><span class="toc-number">2.2.</span> <span class="toc-text">（2）PyTorchVideo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%883%EF%BC%89torchtext"><span class="toc-number">2.3.</span> <span class="toc-text">（3）torchtext</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">2.3.0.1.</span> <span class="toc-text">构建数据集</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-PyTorch%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2"><span class="toc-number">3.</span> <span class="toc-text">2.PyTorch模型部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ONNX"><span class="toc-number">3.1.</span> <span class="toc-text">ONNX</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89ONNX%E7%AE%80%E4%BB%8B"><span class="toc-number">3.1.0.1.</span> <span class="toc-text">（1）ONNX简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%A8%A1%E5%9E%8B%E5%AF%BC%E5%87%BA%E4%B8%BAONNX"><span class="toc-number">3.1.0.2.</span> <span class="toc-text">（2）模型导出为ONNX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E5%8F%AF%E7%94%A8%E6%80%A7%E6%A3%80%E6%9F%A5"><span class="toc-number">3.1.0.3.</span> <span class="toc-text">（3）可用性检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">3.1.0.4.</span> <span class="toc-text">（4）可视化</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/dac10dd2.html" title="Ubuntu22.04前期优化"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pica.zhimg.com/v2-13acbbcb06dce56dd89b729b48a80e99_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ubuntu22.04前期优化"/></a><div class="content"><a class="title" href="/posts/dac10dd2.html" title="Ubuntu22.04前期优化">Ubuntu22.04前期优化</a><time datetime="2022-12-06T15:19:12.000Z" title="发表于 2022-12-06 23:19:12">2022-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/549a771b.html" title="Ubuntu22.04安装"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://robertinit.com/wp-content/uploads/2021/04/ubuntu-logo-1200x884-1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ubuntu22.04安装"/></a><div class="content"><a class="title" href="/posts/549a771b.html" title="Ubuntu22.04安装">Ubuntu22.04安装</a><time datetime="2022-12-06T15:11:57.000Z" title="发表于 2022-12-06 23:11:57">2022-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4419691d.html" title="ThoroughPyTorch——5"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThoroughPyTorch——5"/></a><div class="content"><a class="title" href="/posts/4419691d.html" title="ThoroughPyTorch——5">ThoroughPyTorch——5</a><time datetime="2022-11-27T09:57:52.000Z" title="发表于 2022-11-27 17:57:52">2022-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2b2f8273.html" title="ThoroughPytorch——4"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThoroughPytorch——4"/></a><div class="content"><a class="title" href="/posts/2b2f8273.html" title="ThoroughPytorch——4">ThoroughPytorch——4</a><time datetime="2022-11-25T15:29:13.000Z" title="发表于 2022-11-25 23:29:13">2022-11-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b54b17d0.html" title="ThoroughPytorch——3"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThoroughPytorch——3"/></a><div class="content"><a class="title" href="/posts/b54b17d0.html" title="ThoroughPytorch——3">ThoroughPytorch——3</a><time datetime="2022-11-23T15:30:08.000Z" title="发表于 2022-11-23 23:30:08">2022-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Yang.f.z.</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="1708664797" data-server="tencent" data-type="playlist" data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">点击查看</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '点击查看',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#425aef' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '419feb51628743fc9be36d50adec4d62';
+  var gaud_map_key = 'a09c3c97250069f964b76c0c21c587b6';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://beian.miit.gov.cn/#/Integrated/index" style="margin-inline:5px" data-title="本站已在鲁进行备案" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/鲁ICP备.svg" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax src="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('recent-posts');
+      var item_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 280px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("https://github.anzhiy.cn/api?yang-makabaka",['#ebedf0', '#f1f8ff', '#dbedff', '#c8e1ff', '#79b8ff', '#2188ff', '#0366d6', '#005cc5', '#044289', '#032f62', '#05264c'],'yang-makabaka')
+    }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ThoroughPytorch——3 | Mariana</title><meta name="keywords" content="笔记"><meta name="author" content="Yang.f.z."><meta name="copyright" content="Yang.f.z."><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第六章：PyTorch进阶训练技巧DataWhale在线文档：https:&#x2F;&#x2F;datawhalechina.github.io&#x2F;thorough-pytorch&#x2F;第六章&#x2F;index.html 6.1 自定义损失函数在科学研究中，我们往往会提出全新的损失函数来提升模型的表现，此时我们需要自己设计损失函数。 （1）以函数方式定义123def my_loss(output, target):    lo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThoroughPytorch——3">
+<meta property="og:url" content="https://yang-makabaka.github.io/posts/b54b17d0.html">
+<meta property="og:site_name" content="Mariana">
+<meta property="og:description" content="第六章：PyTorch进阶训练技巧DataWhale在线文档：https:&#x2F;&#x2F;datawhalechina.github.io&#x2F;thorough-pytorch&#x2F;第六章&#x2F;index.html 6.1 自定义损失函数在科学研究中，我们往往会提出全新的损失函数来提升模型的表现，此时我们需要自己设计损失函数。 （1）以函数方式定义123def my_loss(output, target):    lo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yang-makabaka.github.io/source/img/back1.png">
+<meta property="article:published_time" content="2022-11-23T15:30:08.000Z">
+<meta property="article:modified_time" content="2022-11-23T15:32:20.621Z">
+<meta property="article:author" content="Yang.f.z.">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yang-makabaka.github.io/source/img/back1.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yang-makabaka.github.io/posts/b54b17d0"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#425aef"/><link rel="apple-touch-icon" sizes="180x180" href="/img/siteicon/128.png"/><link rel="icon" type="image/png" sizes="32x32" href="/img/siteicon/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/img/siteicon/16.png"/><link rel="mask-icon" href="/img/siteicon/128.png" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ThoroughPytorch——3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-23 23:32:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Mariana" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/touxiang.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/source/img/back1.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Mariana</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ThoroughPytorch——3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-23T15:30:08.000Z" title="发表于 2022-11-23 23:30:08">2022-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-23T15:32:20.621Z" title="更新于 2022-11-23 23:32:20">2022-11-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ThoroughPytorch——3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第六章：PyTorch进阶训练技巧"><a href="#第六章：PyTorch进阶训练技巧" class="headerlink" title="第六章：PyTorch进阶训练技巧"></a>第六章：PyTorch进阶训练技巧</h1><p>DataWhale在线文档：<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/第六章/index.html">https://datawhalechina.github.io/thorough-pytorch/第六章/index.html</a></p>
+<h2 id="6-1-自定义损失函数"><a href="#6-1-自定义损失函数" class="headerlink" title="6.1 自定义损失函数"></a>6.1 自定义损失函数</h2><p>在科学研究中，我们往往会提出全新的损失函数来提升模型的表现，此时我们需要自己设计损失函数。</p>
+<h4 id="（1）以函数方式定义"><a href="#（1）以函数方式定义" class="headerlink" title="（1）以函数方式定义"></a>（1）以函数方式定义</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def my_loss(output, target):</span><br><span class="line">    loss = torch.mean((output - target)**2)</span><br><span class="line">    return loss</span><br></pre></td></tr></table></figure>
+<h4 id="（2）以类方式定义"><a href="#（2）以类方式定义" class="headerlink" title="（2）以类方式定义"></a>（2）以类方式定义</h4><p>在以类方式定义损失函数时，我们如果看每一个损失函数的继承关系我们就可以发现<code>Loss</code>函数部分继承自<code>_loss</code>, 部分继承自<code>_WeightedLoss</code>, 而<code>_WeightedLoss</code>继承自<code>_loss</code>，<code>_loss</code>继承自 <strong>nn.Module</strong>。我们可以将其当作神经网络的一层来对待，同样地，我们的损失函数类就需要继承自<strong>nn.Module</strong>类。</p>
+<p>例：Dice Loss      [ DSC = \frac{2|X∩Y|}{|X|+|Y|} ]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class DiceLoss(nn.Module):</span><br><span class="line">    def __init__(self,weight=None,size_average=True):</span><br><span class="line">        super(DiceLoss,self).__init__()</span><br><span class="line">        </span><br><span class="line">    def forward(self,inputs,targets,smooth=1):</span><br><span class="line">        inputs = F.sigmoid(inputs)       </span><br><span class="line">        inputs = inputs.view(-1)</span><br><span class="line">        targets = targets.view(-1)</span><br><span class="line">        intersection = (inputs * targets).sum()                   </span><br><span class="line">        dice = (2.*intersection + smooth)/(inputs.sum() + targets.sum() + smooth)  </span><br><span class="line">        return 1 - dice</span><br><span class="line"></span><br><span class="line"># 使用方法    </span><br><span class="line">criterion = DiceLoss()</span><br><span class="line">loss = criterion(input,targets)</span><br></pre></td></tr></table></figure>
+<h2 id="6-2-动态调整学习率"><a href="#6-2-动态调整学习率" class="headerlink" title="6.2 动态调整学习率"></a>6.2 动态调整学习率</h2><p>我们可以通过一个适当的学习率衰减策略来改善学习率不能满足模型调优需求的情况，提高我们的精度。这种方式称为scheduler。</p>
+<h4 id="（1）使用官方scheduler"><a href="#（1）使用官方scheduler" class="headerlink" title="（1）使用官方scheduler"></a>（1）使用官方scheduler</h4><p>一些封装在torch.optim.lr_scheduler中的调整学习率的方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 选择一种优化器</span><br><span class="line">optimizer = torch.optim.Adam(...) </span><br><span class="line"># 选择上面提到的一种或多种动态调整学习率的方法</span><br><span class="line">scheduler1 = torch.optim.lr_scheduler.... </span><br><span class="line">scheduler2 = torch.optim.lr_scheduler....</span><br><span class="line">...</span><br><span class="line">schedulern = torch.optim.lr_scheduler....</span><br><span class="line"># 进行训练</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    train(...)</span><br><span class="line">    validate(...)</span><br><span class="line">    optimizer.step()</span><br><span class="line">    # 需要在优化器参数更新之后再动态调整学习率</span><br><span class="line">	scheduler1.step() </span><br><span class="line">	...</span><br><span class="line">    schedulern.step()  #放在optimizer.step()后面进行使用</span><br></pre></td></tr></table></figure>
+<h4 id="（2）自定义scheduler"><a href="#（2）自定义scheduler" class="headerlink" title="（2）自定义scheduler"></a>（2）自定义scheduler</h4><p>自定义函数<code>adjust_learning_rate</code>来改变<code>param_group</code>中<code>lr</code>的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def adjust_learning_rate(optimizer, epoch): #根据需要改变</span><br><span class="line">    lr = ....</span><br><span class="line">    for param_group in optimizer.param_groups:</span><br><span class="line">        param_group[&#x27;lr&#x27;] = lr</span><br><span class="line">        </span><br><span class="line">def adjust_learning_rate(optimizer,...):</span><br><span class="line">    ...</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(),lr = args.lr,momentum = 0.9)</span><br><span class="line">for epoch in range(10):</span><br><span class="line">    train(...)</span><br><span class="line">    validate(...)</span><br><span class="line">    adjust_learning_rate(optimizer,epoch)</span><br></pre></td></tr></table></figure>
+<h2 id="6-3-模型微调-torchvision"><a href="#6-3-模型微调-torchvision" class="headerlink" title="6.3 模型微调-torchvision"></a>6.3 模型微调-torchvision</h2><p>为解决数据集不足或花费较大的情况，使用迁移学习方法。</p>
+<p>迁移学习的一大应用场景——预训练模型微调</p>
+<h4 id="6-3-1-模型微调的流程"><a href="#6-3-1-模型微调的流程" class="headerlink" title="6.3.1 模型微调的流程"></a>6.3.1 模型微调的流程</h4><ol>
+<li>在源数据集上预训练一个模型，称源模型。</li>
+<li>创建一个新的目标模型，复制源模型上除输出层外的所有模型设计及其参数。</li>
+<li>为目标模型添加一个输出⼤小为⽬标数据集类别个数的输出层，并随机初始化该层的模型参数。</li>
+<li>在目标数据集上训练目标模型。从头训练输出层，其余层的参数都是基于源模型的参数微调得到的。</li>
+</ol>
+<p>我们假设这些模型参数包含了源数据集上学习到的知识，且这些知识同样适用于目标数据集。我们还假设源模型的输出层跟源数据集的标签紧密相关，因此在目标模型中不予采用。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://datawhalechina.github.io/thorough-pytorch/_images/finetune.png" alt="finetune"></p>
+<h4 id="（2）使用已有模型结构"><a href="#（2）使用已有模型结构" class="headerlink" title="（2）使用已有模型结构"></a>（2）使用已有模型结构</h4><ul>
+<li><p>实例化网络</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import torchvision.models as models</span><br><span class="line">resnet18 = models.resnet18()</span><br><span class="line"># resnet18 = models.resnet18(pretrained=False)  等价于与上面的表达式</span><br><span class="line">alexnet = models.alexnet()</span><br><span class="line">vgg16 = models.vgg16()</span><br><span class="line">squeezenet = models.squeezenet1_0()</span><br><span class="line">densenet = models.densenet161()</span><br><span class="line">inception = models.inception_v3()</span><br><span class="line">googlenet = models.googlenet()</span><br><span class="line">shufflenet = models.shufflenet_v2_x1_0()</span><br><span class="line">mobilenet_v2 = models.mobilenet_v2()</span><br><span class="line">mobilenet_v3_large = models.mobilenet_v3_large()</span><br><span class="line">mobilenet_v3_small = models.mobilenet_v3_small()</span><br><span class="line">resnext50_32x4d = models.resnext50_32x4d()</span><br><span class="line">wide_resnet50_2 = models.wide_resnet50_2()</span><br><span class="line">mnasnet = models.mnasnet1_0()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>传递<code>pretrained</code>参数</p>
+</li>
+</ul>
+<p>通过<code>True</code>或者<code>False</code>来决定是否使用预训练好的权重，在默认状态下<code>pretrained = False</code>，意味着我们不使用预训练得到的权重，当<code>pretrained = True</code>，意味着我们将使用在一些数据集上预训练得到的权重。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import torchvision.models as models</span><br><span class="line">resnet18 = models.resnet18(pretrained=True)</span><br></pre></td></tr></table></figure>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li><p>通常PyTorch模型的扩展为<code>.pt</code>或<code>.pth</code>，程序运行时会检查默认路径是否有下载好的模型权重，权重下载后，下次加载不再需要下载。</p>
+</li>
+<li><p>一般下载较慢，可以直接迅雷或者其他方式去 <a target="_blank" rel="noopener" href="https://github.com/pytorch/vision/tree/master/torchvision/models">这里</a> 查看自己的模型里面<code>model_urls</code>，然后手动下载，预训练模型的权重在<code>Linux</code>和<code>Mac</code>的默认下载路径是用户根目录下的<code>.cache</code>文件夹。在<code>Windows</code>下就是<code>C:\Users\&lt;username&gt;\.cache\torch\hub\checkpoint</code>。可以通过使用 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/model_zoo.html#torch.utils.model_zoo.load_url"><code>torch.utils.model_zoo.load_url()</code></a>设置权重的下载地址。</p>
+</li>
+<li><p>还可以将权重自己下载放到同文件夹下，然后再将参数加载网络。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.model = models.resnet50(pretrained=False)</span><br><span class="line">self.model.load_state_dict(torch.load(&#x27;./model/resnet50-19c8e357.pth&#x27;))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果中途强行停止下载，一定去对应路径下将权重文件删除干净，不然可能会报错。</p>
+</li>
+</ol>
+<h4 id="（3）训练特定层"><a href="#（3）训练特定层" class="headerlink" title="（3）训练特定层"></a>（3）训练特定层</h4><p>提取特征并且只想为新初始化的层计算梯度，其他参数不改变，就需要通过设置<code>requires_grad = False</code>来冻结部分层。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def set_parameter_requires_grad(model, feature_extracting):</span><br><span class="line">    if feature_extracting:</span><br><span class="line">        for param in model.parameters():</span><br><span class="line">            param.requires_grad = False</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import torchvision.models as models</span><br><span class="line"># 冻结参数的梯度</span><br><span class="line">feature_extract = True</span><br><span class="line">model = models.resnet18(pretrained=True)</span><br><span class="line">set_parameter_requires_grad(model, feature_extract) #引用上面</span><br><span class="line"># 修改模型</span><br><span class="line">num_ftrs = model.fc.in_features</span><br><span class="line">model.fc = nn.Linear(in_features=num_ftrs, out_features=4, bias=True)</span><br></pre></td></tr></table></figure>
+<p>仅改变最后一层的模型参数，不改变特征提取的模型参数；注意我们先冻结模型参数的梯度，再对模型输出部分的全连接层进行修改，这样修改后的全连接层的参数就是可计算梯度的。之后在训练过程中，model仍会进行梯度回传，但是参数更新则只会发生在fc层。通过设定参数的requires_grad属性，我们完成了指定训练模型的特定层的目标，这对实现模型微调非常重要。</p>
+<h2 id="6-4-模型微调-timm"><a href="#6-4-模型微调-timm" class="headerlink" title="6.4 模型微调 - timm"></a>6.4 模型微调 - timm</h2><p>timm是另一个预训练模型库，提供了许多计算机视觉的SOTA模型，可以当作是torchvision的扩充版本，并且里面的模型在准确度上也较高。</p>
+<p>原文：<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/第六章/6.3%20模型微调-timm.html">https://datawhalechina.github.io/thorough-pytorch/第六章/6.3%20模型微调-timm.html</a></p>
+<h2 id="6-5半精度训练"><a href="#6-5半精度训练" class="headerlink" title="6.5半精度训练"></a>6.5半精度训练</h2><p>PyTorch默认的浮点数存储方式用的是torch.float32,多数场景其实并不需要这么精确,因此可进行半精度训练（torch.float16）以减少显存使用。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://datawhalechina.github.io/thorough-pytorch/_images/float16.jpg" alt="amp"></p>
+<p>如何设置：</p>
+<ul>
+<li><strong>import autocast</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from torch.cuda.amp import autocast</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>模型设置</strong></li>
+</ul>
+<p>在模型定义中，使用python的装饰器方法，用autocast装饰模型中的forward函数。关于装饰器的使用，可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jfdwd/p/11253925.html">这里</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@autocast()   </span><br><span class="line">def forward(self, x):</span><br><span class="line">    ...</span><br><span class="line">    return x</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>训练过程</strong></li>
+</ul>
+<p>在训练过程中，只需在将数据输入模型及其之后的部分放入“with autocast():“即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for x in train_loader:</span><br><span class="line">x = x.cuda()</span><br><span class="line">with autocast():</span><br><span class="line">       output = model(x)</span><br><span class="line">       ...</span><br></pre></td></tr></table></figure>
+<h2 id="6-6-数据增强-imgaug"><a href="#6-6-数据增强-imgaug" class="headerlink" title="6.6 数据增强-imgaug"></a>6.6 数据增强-imgaug</h2><p>深度学习需要大量数据，当数据量不够时，可使用数据增强技术，提高训练数据集的大小和质量。</p>
+<h4 id="（1）imgaug"><a href="#（1）imgaug" class="headerlink" title="（1）imgaug"></a>（1）imgaug</h4><p><code>imgaug</code>是计算机视觉任务中常用的一个数据增强的包，相比于<code>torchvision.transforms</code>，它提供了更多的数据增强方法。</p>
+<ol>
+<li>Github地址：<a target="_blank" rel="noopener" href="https://github.com/aleju/imgaug">imgaug</a></li>
+<li>Readthedocs：<a target="_blank" rel="noopener" href="https://imgaug.readthedocs.io/en/latest/source/examples_basics.html">imgaug</a></li>
+<li>官方提供notebook例程：<a target="_blank" rel="noopener" href="https://github.com/aleju/imgaug-doc/tree/master/notebooks">notebook</a></li>
+</ol>
+<p><strong>安装：</strong></p>
+<h4 id="conda"><a href="#conda" class="headerlink" title="conda"></a>conda</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels conda-forge</span><br><span class="line">conda install imgaug</span><br></pre></td></tr></table></figure>
+<h4 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#  install imgaug either via pypi</span><br><span class="line"></span><br><span class="line">pip install imgaug</span><br><span class="line"></span><br><span class="line">#  install the latest version directly from github</span><br><span class="line"></span><br><span class="line">pip install git+https://github.com/aleju/imgaug.git</span><br></pre></td></tr></table></figure>
+<p>具体：<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/第六章/6.5%20数据增强-imgaug.html">https://datawhalechina.github.io/thorough-pytorch/第六章/6.5%20数据增强-imgaug.html</a></p>
+<h2 id="6-7-使用argparse进行调参"><a href="#6-7-使用argparse进行调参" class="headerlink" title="6.7 使用argparse进行调参"></a>6.7 使用argparse进行调参</h2><p>解析我们输入的命令行参数再传入模型的超参数中</p>
+<p>命令行输入<code>python file.py --lr 1e-4 --batch_size 32</code>来完成对常见超参数的设置</p>
+<h4 id="（1）使用"><a href="#（1）使用" class="headerlink" title="（1）使用"></a>（1）使用</h4><ul>
+<li>创建<code>ArgumentParser()</code>对象</li>
+<li>调用<code>add_argument()</code>方法添加参数</li>
+<li>使用<code>parse_args()</code>解析参数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># demo.py</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"># 创建ArgumentParser()对象</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line"></span><br><span class="line"># 添加参数</span><br><span class="line">parser.add_argument(&#x27;-o&#x27;, &#x27;--output&#x27;, action=&#x27;store_true&#x27;, </span><br><span class="line">    help=&quot;shows output&quot;)</span><br><span class="line"># action = `store_true` 会将output参数记录为True</span><br><span class="line"># type 规定了参数的格式</span><br><span class="line"># default 规定了默认值</span><br><span class="line">parser.add_argument(&#x27;--lr&#x27;, type=float, default=3e-5, help=&#x27;select the learning rate, default=1e-3&#x27;) </span><br><span class="line"></span><br><span class="line">parser.add_argument(&#x27;--batch_size&#x27;, type=int, required=True, help=&#x27;input batch size&#x27;)  </span><br><span class="line"># 使用parse_args()解析函数</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">if args.output:</span><br><span class="line">    print(&quot;This is some output&quot;)</span><br><span class="line">    print(f&quot;learning rate:&#123;args.lr&#125; &quot;)</span><br></pre></td></tr></table></figure>
+<p>我们在命令行使用<code>python demo.py --lr 3e-4 --batch_size 32</code>，就可以看到以下的输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">This is some output</span><br><span class="line">learning rate: 3e-4</span><br></pre></td></tr></table></figure>
+<h4 id="（2）原文作者的方法"><a href="#（2）原文作者的方法" class="headerlink" title="（2）原文作者的方法"></a>（2）原文作者的方法</h4><p>每个人都有着不同的超参数管理方式，在这里我将分享我使用argparse管理超参数的方式，希望可以对大家有一些借鉴意义。通常情况下，为了使代码更加简洁和模块化，我一般会将有关超参数的操作写在<code>config.py</code>，然后在<code>train.py</code>或者其他文件导入就可以。具体的<code>config.py</code>可以参考如下内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import argparse  </span><br><span class="line">  </span><br><span class="line">def get_options(parser=argparse.ArgumentParser()):  </span><br><span class="line">  </span><br><span class="line">    parser.add_argument(&#x27;--workers&#x27;, type=int, default=0,  </span><br><span class="line">                        help=&#x27;number of data loading workers, you had better put it &#x27;  </span><br><span class="line">                              &#x27;4 times of your gpu&#x27;)  </span><br><span class="line">  </span><br><span class="line">    parser.add_argument(&#x27;--batch_size&#x27;, type=int, default=4, help=&#x27;input batch size, default=64&#x27;)  </span><br><span class="line">  </span><br><span class="line">    parser.add_argument(&#x27;--niter&#x27;, type=int, default=10, help=&#x27;number of epochs to train for, default=10&#x27;)  </span><br><span class="line">  </span><br><span class="line">    parser.add_argument(&#x27;--lr&#x27;, type=float, default=3e-5, help=&#x27;select the learning rate, default=1e-3&#x27;)  </span><br><span class="line">  </span><br><span class="line">    parser.add_argument(&#x27;--seed&#x27;, type=int, default=118, help=&quot;random seed&quot;)  </span><br><span class="line">  </span><br><span class="line">    parser.add_argument(&#x27;--cuda&#x27;, action=&#x27;store_true&#x27;, default=True, help=&#x27;enables cuda&#x27;)  </span><br><span class="line">    parser.add_argument(&#x27;--checkpoint_path&#x27;,type=str,default=&#x27;&#x27;,  </span><br><span class="line">                        help=&#x27;Path to load a previous trained model if not empty (default empty)&#x27;)  </span><br><span class="line">    parser.add_argument(&#x27;--output&#x27;,action=&#x27;store_true&#x27;,default=True,help=&quot;shows output&quot;)  </span><br><span class="line">  </span><br><span class="line">    opt = parser.parse_args()  </span><br><span class="line">  </span><br><span class="line">    if opt.output:  </span><br><span class="line">        print(f&#x27;num_workers: &#123;opt.workers&#125;&#x27;)  </span><br><span class="line">        print(f&#x27;batch_size: &#123;opt.batch_size&#125;&#x27;)  </span><br><span class="line">        print(f&#x27;epochs (niters) : &#123;opt.niter&#125;&#x27;)  </span><br><span class="line">        print(f&#x27;learning rate : &#123;opt.lr&#125;&#x27;)  </span><br><span class="line">        print(f&#x27;manual_seed: &#123;opt.seed&#125;&#x27;)  </span><br><span class="line">        print(f&#x27;cuda enable: &#123;opt.cuda&#125;&#x27;)  </span><br><span class="line">        print(f&#x27;checkpoint_path: &#123;opt.checkpoint_path&#125;&#x27;)  </span><br><span class="line">  </span><br><span class="line">    return opt  </span><br><span class="line">  </span><br><span class="line">if __name__ == &#x27;__main__&#x27;:  </span><br><span class="line">    opt = get_options()</span><br><span class="line">$ python config.py</span><br><span class="line"></span><br><span class="line">num_workers: 0</span><br><span class="line">batch_size: 4</span><br><span class="line">epochs (niters) : 10</span><br><span class="line">learning rate : 3e-05</span><br><span class="line">manual_seed: 118</span><br><span class="line">cuda enable: True</span><br><span class="line">checkpoint_path:</span><br></pre></td></tr></table></figure>
+<p>随后在<code>train.py</code>等其他文件，我们就可以使用下面的这样的结构来调用参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 导入必要库</span><br><span class="line">...</span><br><span class="line">import config</span><br><span class="line"></span><br><span class="line">opt = config.get_options()</span><br><span class="line"></span><br><span class="line">manual_seed = opt.seed</span><br><span class="line">num_workers = opt.workers</span><br><span class="line">batch_size = opt.batch_size</span><br><span class="line">lr = opt.lr</span><br><span class="line">niters = opt.niters</span><br><span class="line">checkpoint_path = opt.checkpoint_path</span><br><span class="line"></span><br><span class="line"># 随机数的设置，保证复现结果</span><br><span class="line">def set_seed(seed):</span><br><span class="line">    torch.manual_seed(seed)</span><br><span class="line">    torch.cuda.manual_seed_all(seed)</span><br><span class="line">    random.seed(seed)</span><br><span class="line">    np.random.seed(seed)</span><br><span class="line">    torch.backends.cudnn.benchmark = False</span><br><span class="line">    torch.backends.cudnn.deterministic = True</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">	set_seed(manual_seed)</span><br><span class="line">	for epoch in range(niters):</span><br><span class="line">		train(model,lr,batch_size,num_workers,checkpoint_path)</span><br><span class="line">		val(model,lr,batch_size,num_workers,checkpoint_path)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yang-makabaka.github.io">Yang.f.z.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yang-makabaka.github.io/posts/b54b17d0.html">https://yang-makabaka.github.io/posts/b54b17d0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yang-makabaka.github.io" target="_blank">Mariana</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a></div><div class="post_share"><div class="social-share" data-image="/source/img/back1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2b2f8273.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ThoroughPytorch——4</div></div></a></div><div class="next-post pull-right"><a href="/posts/8987048d.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ThoroughPytorch——2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/787ba630.html" title="Pytorch基础"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-15</div><div class="title">Pytorch基础</div></div></a></div><div><a href="/posts/4419691d.html" title="ThoroughPyTorch——5"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-27</div><div class="title">ThoroughPyTorch——5</div></div></a></div><div><a href="/posts/5b4576fc.html" title="ThoroughPytorch——1"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-19</div><div class="title">ThoroughPytorch——1</div></div></a></div><div><a href="/posts/8987048d.html" title="ThoroughPytorch——2"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">ThoroughPytorch——2</div></div></a></div><div><a href="/posts/2b2f8273.html" title="ThoroughPytorch——4"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-25</div><div class="title">ThoroughPytorch——4</div></div></a></div><div><a href="/posts/d048e11d.html" title="吃瓜教程-P2"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://z4a.net/images/2022/10/27/1B4D9886-68EF-4651-9902-9C0E16226631.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">吃瓜教程-P2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/touxiang.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yang.f.z.</div><div class="author-info__description">一起去码头搞点薯条吗</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yang-makabaka"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">博客建设中...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9APyTorch%E8%BF%9B%E9%98%B6%E8%AE%AD%E7%BB%83%E6%8A%80%E5%B7%A7"><span class="toc-number">1.</span> <span class="toc-text">第六章：PyTorch进阶训练技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">6.1 自定义损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BB%A5%E5%87%BD%E6%95%B0%E6%96%B9%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">（1）以函数方式定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%BB%A5%E7%B1%BB%E6%96%B9%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">（2）以类方式定义</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-number">1.2.</span> <span class="toc-text">6.2 动态调整学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9scheduler"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">（1）使用官方scheduler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E8%87%AA%E5%AE%9A%E4%B9%89scheduler"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">（2）自定义scheduler</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-torchvision"><span class="toc-number">1.3.</span> <span class="toc-text">6.3 模型微调-torchvision</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-1-%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">6.3.1 模型微调的流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8%E5%B7%B2%E6%9C%89%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">（2）使用已有模型结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E8%AE%AD%E7%BB%83%E7%89%B9%E5%AE%9A%E5%B1%82"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">（3）训练特定层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-timm"><span class="toc-number">1.4.</span> <span class="toc-text">6.4 模型微调 - timm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5%E5%8D%8A%E7%B2%BE%E5%BA%A6%E8%AE%AD%E7%BB%83"><span class="toc-number">1.5.</span> <span class="toc-text">6.5半精度训练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-imgaug"><span class="toc-number">1.6.</span> <span class="toc-text">6.6 数据增强-imgaug</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89imgaug"><span class="toc-number">1.6.0.1.</span> <span class="toc-text">（1）imgaug</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#conda"><span class="toc-number">1.6.0.2.</span> <span class="toc-text">conda</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pip"><span class="toc-number">1.6.0.3.</span> <span class="toc-text">pip</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-7-%E4%BD%BF%E7%94%A8argparse%E8%BF%9B%E8%A1%8C%E8%B0%83%E5%8F%82"><span class="toc-number">1.7.</span> <span class="toc-text">6.7 使用argparse进行调参</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.0.1.</span> <span class="toc-text">（1）使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%8E%9F%E6%96%87%E4%BD%9C%E8%80%85%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.0.2.</span> <span class="toc-text">（2）原文作者的方法</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/dac10dd2.html" title="Ubuntu22.04前期优化"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pica.zhimg.com/v2-13acbbcb06dce56dd89b729b48a80e99_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ubuntu22.04前期优化"/></a><div class="content"><a class="title" href="/posts/dac10dd2.html" title="Ubuntu22.04前期优化">Ubuntu22.04前期优化</a><time datetime="2022-12-06T15:19:12.000Z" title="发表于 2022-12-06 23:19:12">2022-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/549a771b.html" title="Ubuntu22.04安装"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://robertinit.com/wp-content/uploads/2021/04/ubuntu-logo-1200x884-1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ubuntu22.04安装"/></a><div class="content"><a class="title" href="/posts/549a771b.html" title="Ubuntu22.04安装">Ubuntu22.04安装</a><time datetime="2022-12-06T15:11:57.000Z" title="发表于 2022-12-06 23:11:57">2022-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4419691d.html" title="ThoroughPyTorch——5"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThoroughPyTorch——5"/></a><div class="content"><a class="title" href="/posts/4419691d.html" title="ThoroughPyTorch——5">ThoroughPyTorch——5</a><time datetime="2022-11-27T09:57:52.000Z" title="发表于 2022-11-27 17:57:52">2022-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2b2f8273.html" title="ThoroughPytorch——4"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThoroughPytorch——4"/></a><div class="content"><a class="title" href="/posts/2b2f8273.html" title="ThoroughPytorch——4">ThoroughPytorch——4</a><time datetime="2022-11-25T15:29:13.000Z" title="发表于 2022-11-25 23:29:13">2022-11-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b54b17d0.html" title="ThoroughPytorch——3"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/back1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThoroughPytorch——3"/></a><div class="content"><a class="title" href="/posts/b54b17d0.html" title="ThoroughPytorch——3">ThoroughPytorch——3</a><time datetime="2022-11-23T15:30:08.000Z" title="发表于 2022-11-23 23:30:08">2022-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Yang.f.z.</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="1708664797" data-server="tencent" data-type="playlist" data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">点击查看</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '点击查看',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#425aef' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '419feb51628743fc9be36d50adec4d62';
+  var gaud_map_key = 'a09c3c97250069f964b76c0c21c587b6';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://beian.miit.gov.cn/#/Integrated/index" style="margin-inline:5px" data-title="本站已在鲁进行备案" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/source/img/鲁ICP备.svg" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax src="https://cdn.cbd.int/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('recent-posts');
+      var item_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 280px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("https://github.anzhiy.cn/api?yang-makabaka",['#ebedf0', '#f1f8ff', '#dbedff', '#c8e1ff', '#79b8ff', '#2188ff', '#0366d6', '#005cc5', '#044289', '#032f62', '#05264c'],'yang-makabaka')
+    }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
