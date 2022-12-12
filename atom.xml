@@ -6,7 +6,7 @@
   <link href="https://yang-makabaka.github.io/atom.xml" rel="self"/>
   
   <link href="https://yang-makabaka.github.io/"/>
-  <updated>2022-12-12T13:30:34.186Z</updated>
+  <updated>2022-12-12T14:36:52.655Z</updated>
   <id>https://yang-makabaka.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>HappyBirthday!</title>
+    <link href="https://yang-makabaka.github.io/posts/9209df64.html"/>
+    <id>https://yang-makabaka.github.io/posts/9209df64.html</id>
+    <published>2022-12-12T14:03:33.000Z</published>
+    <updated>2022-12-12T14:36:52.655Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://s3.bmp.ovh/imgs/2022/12/12/5ad4160f9fe5d284.jpg" alt=""></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://s3.bmp.ovh/imgs/2022/12/12/5ad4160f9fe5d284.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+    <category term="杂文" scheme="https://yang-makabaka.github.io/tags/%E6%9D%82%E6%96%87/"/>
+    
+  </entry>
+  
+  <entry>
     <title>OpenCV——1</title>
     <link href="https://yang-makabaka.github.io/posts/5c81b7f3.html"/>
     <id>https://yang-makabaka.github.io/posts/5c81b7f3.html</id>
     <published>2022-12-12T13:19:26.000Z</published>
-    <updated>2022-12-12T13:30:34.186Z</updated>
+    <updated>2022-12-12T13:30:51.042Z</updated>
     
     <content type="html"><![CDATA[<h1 id="一、认识计算机视觉"><a href="#一、认识计算机视觉" class="headerlink" title="一、认识计算机视觉"></a>一、认识计算机视觉</h1><h2 id="1-发展历史"><a href="#1-发展历史" class="headerlink" title="1.发展历史"></a>1.发展历史</h2><p>•最早追溯到老子小孔成像</p><p>•现代1966年MIT的马文·明斯基的学生实现PC链接摄像机，标志计算机视觉作为一门学科开始发展</p><p>•1982.马尔文发布《视觉》标志着CV正式成为一门学科</p><p>•1999.David Lowe 发表SIFT特征相关论文，OpenCV收录使用</p><p>•2001.V&amp;J发表基于HAAR特征的实时人脸检测算法</p><p>•2005.HOG提出特征提取的行人检测算法</p><p>•2006.Pascal VOC数据集发布</p><p>•2012.AlexNet模型赢得ImageNet图像分类比赛冠军，展现出深度学习在CV领域的应用前景</p><p>•未来世界离不开CV</p><h2 id="2-主要任务"><a href="#2-主要任务" class="headerlink" title="2.主要任务"></a>2.主要任务</h2><p>早期主要研究领域为<u>重建</u></p><p>2012后，受深度学习影响<u>重建</u>与<u>感知</u>快速发展</p><p>目标：通过图灵测试</p><h2 id="3-应用场景"><a href="#3-应用场景" class="headerlink" title="3.应用场景"></a>3.应用场景</h2><p>•自动驾驶/辅助驾驶</p><p>•计算机视觉-AI + 机构/工业质检检测</p><p>…</p><p>•形成全场景的行业应用</p><h1 id="二、计算机视觉框架"><a href="#二、计算机视觉框架" class="headerlink" title="二、计算机视觉框架"></a>二、计算机视觉框架</h1><h2 id="1-计算机视觉框架"><a href="#1-计算机视觉框架" class="headerlink" title="1.计算机视觉框架"></a>1.计算机视觉框架</h2><p>•Matlab . 追溯到1970年 . 支持图像处理</p><p>•Matrox mil . 1993年发布第一个版本</p><p>•Halcon . 追溯到1996 . CV领域应用最多，主流框架</p><p>•OpenCV . 1999启动，2006发布1.0版本 . 开源</p><p>•VisionPro . 2009年发布</p><p>传统计算机视觉框架</p><p>•SimpleCV</p><p>•BoofCV</p><p>•Dlib</p><p>•JavaCV</p><p>深度学习计算机视觉（训练）框架</p><p>•Caffe</p><p>•Tensorflow</p><p>•Pytorch</p><p>•Paddlepaddle</p><p>•Keras</p><p>深度学习计算机视觉（部署）框架</p><p>•OpenVINO</p><p>•TensorRT</p><p>•onnxruntime</p><p>•Deepface</p><p>•YOLO/DarkNet</p><p>•mmdetection</p><p>•Paddle-detection/seg/ocr</p><h2 id="2-当前主流框架"><a href="#2-当前主流框架" class="headerlink" title="2.当前主流框架"></a>2.当前主流框架</h2><p>•机器视觉方向-Halcon/VisionPro/Mil/OpenCV</p><p>•深度学习方向-tensorflow/pytorch/paddlepaddle + openvino/tensorRT/onnxruntime</p><p>•主流语言Python/C++</p><h2 id="3-计算机视觉框架的未来趋势"><a href="#3-计算机视觉框架的未来趋势" class="headerlink" title="3.计算机视觉框架的未来趋势"></a>3.计算机视觉框架的未来趋势</h2><p>•低代码平台流行趋势明显</p><p>•传统视觉跟深度学习整合趋势明显</p><p>•算法设计流程化/可视化</p><p>•算法模块易用性跟通用性</p><p>•计算资源异构化支持趋势</p><p>•深度学习模型训练简捷化</p><h1 id="三、OpenCV"><a href="#三、OpenCV" class="headerlink" title="三、OpenCV"></a>三、OpenCV</h1><p>•github: <a href="https://github.com/opencv">https://github.com/opencv</a></p><p>•Tutorial: <a href="https://docs.opencv.org/4.5.5/index.html">https://docs.opencv.org/4.5.5/index.html</a></p><h2 id="1-发展历史-1"><a href="#1-发展历史-1" class="headerlink" title="1.发展历史"></a>1.发展历史</h2><p>•OpenCV在1999年的开始开发….</p><p>•2006年 OpenCV1.0正式发布（C）</p><p>•2009年 OpenCV2.0正式发布（C++）</p><p>•2012年 社区托管模式（开源）</p><p>•2015年 OpenCV3.0正式发布（完善接口）</p><p>•2018年 OpenCV4.0正式发布</p><p>•2022年4月份，4.5.5版本</p><h2 id="2-OpenCV模块架构"><a href="#2-OpenCV模块架构" class="headerlink" title="2.OpenCV模块架构"></a>2.OpenCV模块架构</h2><p><img src="/Users/yang/Library/Application Support/typora-user-images/image-20221212200329994.png" alt="image-20221212200329994"></p><h2 id="3-OpenCV安装与支持"><a href="#3-OpenCV安装与支持" class="headerlink" title="3.OpenCV安装与支持"></a>3.OpenCV安装与支持</h2><p>•Python SDK安装，推荐3.6.5</p><p>•OpenCV-Python安装 <code>pip install opencv-python==4.5.4.60</code></p><p>​    (支持镜像安装<code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code>)</p><p>•检查 <code>pip list</code></p><p><code>python</code></p><p><code>Import cv2 as cv</code></p><p><code>cv.__version__</code></p><h2 id="4-Intel-Devcloud-codelab使用"><a href="#4-Intel-Devcloud-codelab使用" class="headerlink" title="4.Intel Devcloud codelab使用"></a>4.Intel Devcloud codelab使用</h2><p>网址：devcloud.intel.com/edge（注册登录）</p><p>学习——教程——OpenCV Tutorial</p><h1 id="四、图像读取与显示"><a href="#四、图像读取与显示" class="headerlink" title="四、图像读取与显示"></a>四、图像读取与显示</h1><p>计算机通过数值识别灰度或彩色图像</p><h2 id="图像读取与显示"><a href="#图像读取与显示" class="headerlink" title="图像读取与显示"></a><strong>图像读取与显示</strong></h2><p>•<code>import cv2 as cv</code> – 导入OpenCV支持</p><p>•<code>import numpy as np</code> – 导入Numpy支持</p><p>•imread函数，读取图像</p><p>•imshow函数, 显示图像</p><p>•加载图像的通道顺序</p><p>•<code>cv.imread(filename[,flags])</code></p><p>​    -filename 表示文件路径</p><p>​    -[]内的参数表示可选，可以不填</p><p>•<code>cv.imshow( winname, mat)</code> #BGR</p><p>​    -winname表示窗口标题</p><p>​    -mat 表示图像对象</p><p>•<code>cv.waitKey(0)</code>  #表示一直等待，直到任意一个键盘操作</p><p>•<code>cv.waitKey(1000)</code>  #表示等待1000毫秒即1秒</p><p>•<code>cv.destroyAllWindows()</code>  #关闭窗口并取消分配任何相关的内存使用。对于一个简单的程序，实际上不必调用这些函数，因为退出时操作系统会自动关闭应用程序的所有资源和窗口</p>]]></content>
     
@@ -421,29 +444,6 @@
       
       
     <summary type="html">&lt;div class=&quot;tag link&quot;&gt;&lt;a class=&quot;link-card&quot; title=&quot;DataWhale李宏毅机器学习&quot; href=&quot;https://linklearner.com/datawhale-homepage/#/learn/detail/93&quot;&gt;&lt;div</summary>
-      
-    
-    
-    
-    
-    <category term="笔记" scheme="https://yang-makabaka.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>李宏毅机器学习-P2误差和梯度分析</title>
-    <link href="https://yang-makabaka.github.io/posts/663340e1.html"/>
-    <id>https://yang-makabaka.github.io/posts/663340e1.html</id>
-    <published>2022-09-16T12:03:12.000Z</published>
-    <updated>2022-09-18T12:14:02.496Z</updated>
-    
-    <content type="html"><![CDATA[<span class='p center logo large'>P2误差和梯度分析</span><div class="note warning no-icon flat"><h1 id="1-误差"><a href="#1-误差" class="headerlink" title="1.误差"></a>1.误差</h1></div><h1 id="Error的来源"><a href="#Error的来源" class="headerlink" title="Error的来源"></a>Error的来源</h1><p><img src="https://s1.328888.xyz/2022/09/16/oL1TS.png" alt="1"></p><p>从上节课测试集数据来看，AverageError 随着模型复杂增加呈指数上升趋势。更复杂的模型并不能给测试集带来更好的效果，而这些 Error 的主要有两个来源，分别是 bias（偏差）和 variance（方差）。</p><h1 id="估测"><a href="#估测" class="headerlink" title="估测"></a>估测</h1><p><img src="https://s1.328888.xyz/2022/09/16/oLaZF.png" alt="2"></p><p>假设\hat f为真实模型，我们通过数据训练出来的理想模型为f^<em>。这个过程就像打靶，\hat f 就是我们的靶心，f^</em> 就是我们投掷的结果。如上图所示，\hat f 与  f^* 之间蓝色部分的差距就是偏差和方差导致的。</p><h1 id="估测变量x的偏差和方差"><a href="#估测变量x的偏差和方差" class="headerlink" title="估测变量x的偏差和方差"></a>估测变量x的偏差和方差</h1><p><a href="https://segmentfault.com/a/1190000016447144">https://segmentfault.com/a/1190000016447144</a><br>误差的期望值 = 噪音的方差 + 模型预测值的方差 + 预测值相对真实值的偏差的平方<br><img src="https://s1.328888.xyz/2022/09/16/oL5s5.png" alt="3"></p><p><img src="https://s1.328888.xyz/2022/09/16/oL9qN.png" alt="4"></p><h2 id="考虑不同模型的方差"><a href="#考虑不同模型的方差" class="headerlink" title="考虑不同模型的方差"></a>考虑不同模型的方差</h2><p>用比较简单的模型，方差是比较小的（就像射击的时候每次的时候，每次射击的设置都集中在一个比较小的区域内）。如果用了复杂的模型，方差就很大，散布比较开。<br><img src="https://s1.328888.xyz/2022/09/16/oLcOy.png" alt="5"></p><h2 id="考虑不同模型的偏差"><a href="#考虑不同模型的偏差" class="headerlink" title="考虑不同模型的偏差"></a>考虑不同模型的偏差</h2><p><img src="https://s1.328888.xyz/2022/09/16/oLoKC.png" alt="6"></p><p>假设黑线为真正的模型，蓝线为平均值，可见更复杂的模型虽然离散程度很高，但其偏差比较小。直观的解释：简单的模型函数集的space比较小，所以可能space里面就没有包含靶心，肯定射不中。而复杂的模型函数集的space比较大，可能就包含的靶心，只是没有办法找到确切的靶心在哪，但足够多的，就可能得到真正的\hat f。</p><h1 id="偏差和方差"><a href="#偏差和方差" class="headerlink" title="偏差和方差"></a>偏差和方差</h1><h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><p>理想中，我们希望得到一个偏差和方差都很小的模型（下图左上），但实际上往往很困难。选择相对较好的模型的顺序：方差小，偏差小 &gt; 方差小，偏差大 &gt; 方差大，偏差小 &gt; 方差大，偏差大。 方差小，偏差大 之所以在实际中排位相对靠前，是因为它比较稳定。很多时候实际中无法获得非常全面的数据集，那么，如果一个模型在可获得的样本上有较小的方差，说明它对不同数据集的敏感度不高，可以期望它对新数据集的预测效果比较稳定。</p><h2 id="拟合"><a href="#拟合" class="headerlink" title="拟合"></a>拟合</h2><p><img src="https://s1.328888.xyz/2022/09/16/oL27d.png" alt="7"></p><p>简单模型（左边）是偏差比较大造成的误差，这种情况叫做欠拟合，而复杂模型（右边）是方差过大造成的误差，这种情况叫做过拟合。<br>如果模型没有很好的训练训练集，就是偏差过大，也就是欠拟合；如果模型很好的训练训练集，即再训练集上得到很小的错误，但在测试集上得到大的错误，这意味着模型可能是方差比较大，就是过拟合。</p><h3 id="偏差大-欠拟合"><a href="#偏差大-欠拟合" class="headerlink" title="偏差大-欠拟合"></a>偏差大-欠拟合</h3><p>此时应该重新设计模型。因为之前的函数集里面可能根本没有包含“靶心”。<br>可以：<br>将更多的函数加进去，比如考虑高度重量，或者HP值等等。或者考虑更多次幂、更复杂的模型。如果此时强行再收集更多的data去训练，这是没有什么帮助的，因为设计的函数集本身就不好，再找更多的训练集也不会更好。</p><h3 id="方差大-过拟合"><a href="#方差大-过拟合" class="headerlink" title="方差大-过拟合"></a>方差大-过拟合</h3><p>简单粗暴的方法：更多的数据<br>但是很多时候不一定能做到收集更多的data。可以针对对问题的理解对数据集做调整。比如识别手写数字的时候，偏转角度的数据集不够，那就将正常的数据集左转15度，右转15度，类似这样的处理。</p><h2 id="模型选择-1"><a href="#模型选择-1" class="headerlink" title="模型选择"></a>模型选择</h2><p class='p red'>#不要这样做！</p><p><img src="https://s1.328888.xyz/2022/09/16/oLVLU.png" alt="8"></p><p>用训练集训练不同的模型，然后在测试集上比较错误，模型3的错误比较小，就认为模型3好。但实际上这只是你手上的测试集，真正完整的测试集并没有。比如在已有的测试集上错误是0.5，但有条件收集到更多的测试集后通常得到的错误都是大于0.5的。</p><p class='p green'>#正确做法</p><p>1.交叉验证<br>交叉验证 就是将训练集再分为两部分，一部分作为训练集，一部分作为验证集。用训练集训练模型，然后再验证集上比较，确定出最好的模型之后（比如模型3），再用全部的训练集训练模型3，然后再用public的测试集进行测试，此时一般得到的错误都是大一些的。不过此时会比较想再回去调一下参数，调整模型，让在public的测试集上更好，但不太推荐这样。</p><p>2.N-折交叉验证<br>将训练集分成N份，比如分成3份。比如在三份中训练结果Average错误是模型1最好，再用全部训练集训练模型1。</p><div class="tag link"><a class="link-card" title="DataWhale李宏毅机器学习" href="https://github.com/datawhalechina/leeml-notes"><div class="left"><img src="https://linklearner.com/datawhale-homepage/#/favicon.ico"/></div><div class="right"><p class="text">DataWhale李宏毅机器学习</p><p class="url">https://github.com/datawhalechina/leeml-notes</p></div></a></div>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;span class=&#39;p center logo large&#39;&gt;P2误差和梯度分析&lt;/span&gt;
-&lt;div class=&quot;note warning no-icon flat&quot;&gt;&lt;h1 id=&quot;1-误差&quot;&gt;&lt;a href=&quot;#1-误差&quot; class=&quot;headerlink&quot; t</summary>
       
     
     
