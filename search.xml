@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>OpenCV——1</title>
+      <link href="/posts/5c81b7f3.html"/>
+      <url>/posts/5c81b7f3.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="一、认识计算机视觉"><a href="#一、认识计算机视觉" class="headerlink" title="一、认识计算机视觉"></a>一、认识计算机视觉</h1><h2 id="1-发展历史"><a href="#1-发展历史" class="headerlink" title="1.发展历史"></a>1.发展历史</h2><p>•最早追溯到老子小孔成像</p><p>•现代1966年MIT的马文·明斯基的学生实现PC链接摄像机，标志计算机视觉作为一门学科开始发展</p><p>•1982.马尔文发布《视觉》标志着CV正式成为一门学科</p><p>•1999.David Lowe 发表SIFT特征相关论文，OpenCV收录使用</p><p>•2001.V&amp;J发表基于HAAR特征的实时人脸检测算法</p><p>•2005.HOG提出特征提取的行人检测算法</p><p>•2006.Pascal VOC数据集发布</p><p>•2012.AlexNet模型赢得ImageNet图像分类比赛冠军，展现出深度学习在CV领域的应用前景</p><p>•未来世界离不开CV</p><h2 id="2-主要任务"><a href="#2-主要任务" class="headerlink" title="2.主要任务"></a>2.主要任务</h2><p>早期主要研究领域为<u>重建</u></p><p>2012后，受深度学习影响<u>重建</u>与<u>感知</u>快速发展</p><p>目标：通过图灵测试</p><h2 id="3-应用场景"><a href="#3-应用场景" class="headerlink" title="3.应用场景"></a>3.应用场景</h2><p>•自动驾驶/辅助驾驶</p><p>•计算机视觉-AI + 机构/工业质检检测</p><p>…</p><p>•形成全场景的行业应用</p><h1 id="二、计算机视觉框架"><a href="#二、计算机视觉框架" class="headerlink" title="二、计算机视觉框架"></a>二、计算机视觉框架</h1><h2 id="1-计算机视觉框架"><a href="#1-计算机视觉框架" class="headerlink" title="1.计算机视觉框架"></a>1.计算机视觉框架</h2><p>•Matlab . 追溯到1970年 . 支持图像处理</p><p>•Matrox mil . 1993年发布第一个版本</p><p>•Halcon . 追溯到1996 . CV领域应用最多，主流框架</p><p>•OpenCV . 1999启动，2006发布1.0版本 . 开源</p><p>•VisionPro . 2009年发布</p><p>传统计算机视觉框架</p><p>•SimpleCV</p><p>•BoofCV</p><p>•Dlib</p><p>•JavaCV</p><p>深度学习计算机视觉（训练）框架</p><p>•Caffe</p><p>•Tensorflow</p><p>•Pytorch</p><p>•Paddlepaddle</p><p>•Keras</p><p>深度学习计算机视觉（部署）框架</p><p>•OpenVINO</p><p>•TensorRT</p><p>•onnxruntime</p><p>•Deepface</p><p>•YOLO/DarkNet</p><p>•mmdetection</p><p>•Paddle-detection/seg/ocr</p><h2 id="2-当前主流框架"><a href="#2-当前主流框架" class="headerlink" title="2.当前主流框架"></a>2.当前主流框架</h2><p>•机器视觉方向-Halcon/VisionPro/Mil/OpenCV</p><p>•深度学习方向-tensorflow/pytorch/paddlepaddle + openvino/tensorRT/onnxruntime</p><p>•主流语言Python/C++</p><h2 id="3-计算机视觉框架的未来趋势"><a href="#3-计算机视觉框架的未来趋势" class="headerlink" title="3.计算机视觉框架的未来趋势"></a>3.计算机视觉框架的未来趋势</h2><p>•低代码平台流行趋势明显</p><p>•传统视觉跟深度学习整合趋势明显</p><p>•算法设计流程化/可视化</p><p>•算法模块易用性跟通用性</p><p>•计算资源异构化支持趋势</p><p>•深度学习模型训练简捷化</p><h1 id="三、OpenCV"><a href="#三、OpenCV" class="headerlink" title="三、OpenCV"></a>三、OpenCV</h1><p>•github: <a href="https://github.com/opencv">https://github.com/opencv</a></p><p>•Tutorial: <a href="https://docs.opencv.org/4.5.5/index.html">https://docs.opencv.org/4.5.5/index.html</a></p><h2 id="1-发展历史-1"><a href="#1-发展历史-1" class="headerlink" title="1.发展历史"></a>1.发展历史</h2><p>•OpenCV在1999年的开始开发….</p><p>•2006年 OpenCV1.0正式发布（C）</p><p>•2009年 OpenCV2.0正式发布（C++）</p><p>•2012年 社区托管模式（开源）</p><p>•2015年 OpenCV3.0正式发布（完善接口）</p><p>•2018年 OpenCV4.0正式发布</p><p>•2022年4月份，4.5.5版本</p><h2 id="2-OpenCV模块架构"><a href="#2-OpenCV模块架构" class="headerlink" title="2.OpenCV模块架构"></a>2.OpenCV模块架构</h2><p><img src="/Users/yang/Library/Application Support/typora-user-images/image-20221212200329994.png" alt="image-20221212200329994"></p><h2 id="3-OpenCV安装与支持"><a href="#3-OpenCV安装与支持" class="headerlink" title="3.OpenCV安装与支持"></a>3.OpenCV安装与支持</h2><p>•Python SDK安装，推荐3.6.5</p><p>•OpenCV-Python安装 <code>pip install opencv-python==4.5.4.60</code></p><p>​    (支持镜像安装<code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code>)</p><p>•检查 <code>pip list</code></p><p><code>python</code></p><p><code>Import cv2 as cv</code></p><p><code>cv.__version__</code></p><h2 id="4-Intel-Devcloud-codelab使用"><a href="#4-Intel-Devcloud-codelab使用" class="headerlink" title="4.Intel Devcloud codelab使用"></a>4.Intel Devcloud codelab使用</h2><p>网址：devcloud.intel.com/edge（注册登录）</p><p>学习——教程——OpenCV Tutorial</p><h1 id="四、图像读取与显示"><a href="#四、图像读取与显示" class="headerlink" title="四、图像读取与显示"></a>四、图像读取与显示</h1><p>计算机通过数值识别灰度或彩色图像</p><h2 id="图像读取与显示"><a href="#图像读取与显示" class="headerlink" title="图像读取与显示"></a><strong>图像读取与显示</strong></h2><p>•<code>import cv2 as cv</code> – 导入OpenCV支持</p><p>•<code>import numpy as np</code> – 导入Numpy支持</p><p>•imread函数，读取图像</p><p>•imshow函数, 显示图像</p><p>•加载图像的通道顺序</p><p>•<code>cv.imread(filename[,flags])</code></p><p>​    -filename 表示文件路径</p><p>​    -[]内的参数表示可选，可以不填</p><p>•<code>cv.imshow( winname, mat)</code> #BGR</p><p>​    -winname表示窗口标题</p><p>​    -mat 表示图像对象</p><p>•<code>cv.waitKey(0)</code>  #表示一直等待，直到任意一个键盘操作</p><p>•<code>cv.waitKey(1000)</code>  #表示等待1000毫秒即1秒</p><p>•<code>cv.destroyAllWindows()</code>  #关闭窗口并取消分配任何相关的内存使用。对于一个简单的程序，实际上不必调用这些函数，因为退出时操作系统会自动关闭应用程序的所有资源和窗口</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Ubuntu22.04前期优化</title>
       <link href="/posts/dac10dd2.html"/>
       <url>/posts/dac10dd2.html</url>
