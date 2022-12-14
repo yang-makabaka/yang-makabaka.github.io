@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>OpenCV——2</title>
+      <link href="/posts/c588e649.html"/>
+      <url>/posts/c588e649.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="05-图像色彩空间转换"><a href="#05-图像色彩空间转换" class="headerlink" title="05 图像色彩空间转换"></a>05 图像色彩空间转换</h2><p><strong>常见的色彩空间：HSV、RGB、YCrCb</strong></p><p>​    RGB色彩空间，设备独立</p><p>​    HSV色彩空间，对计算机友好，区分各种色彩</p><p>​    YCrCb, Y分量表示信息，CrCb可以被压缩</p><p>​    RGB是计算机显示器的标准支持色彩系统</p><p>​    RGB的取值范围0~255</p><p>​    HSV取值范围H（色调）:0°~360°，S（饱和度）:0~255，V（明度）:0~255</p><p><strong>从一个色彩空间转换到另外一个色彩空间</strong>要考虑：</p><p>​    信息传递与损失过程、可逆与不可逆</p><p><strong>函数与参数</strong></p><p>​    cv.cvtColor(<strong>src</strong>,<strong>code</strong>[,dst[,dstCn]])-&gt;dst</p><p>​    <strong>·</strong> src表示输入图像, 类型CV_8U、CV_32F</p><p>​    <strong>·</strong> code表示， </p><p>​        cv::COLOR_BGR2RGB = 4</p><p>​        cv::COLOR_BGR2GRAY = 6</p><p>​        cv::COLOR_GRAY2BGR = 8</p><p>​        cv::COLOR_BGR2HSV = 40</p><p>​        例：img2 = cv.cvtColor(img1, cv.COLOR_BGR2GRAY)</p><p>​        注：当彩色图像转为灰度图像，由三通道转为单通道，其部分信息永久消失，再次转回BGR后图像变为三通道，但仍为灰色。</p><h2 id="06-图像对象的创建与赋值"><a href="#06-图像对象的创建与赋值" class="headerlink" title="06 图像对象的创建与赋值"></a>06 图像对象的创建与赋值</h2><p><strong>① OpenCV-Python支持的数据类型</strong>：np.uint8（默认）、np.float32（方便计算）、np.int32、np.int64</p><p><strong>② Numpy常用函数：</strong></p><p>​    numpy.array、numpy.zeros、numpy.zeros_like（快速产生与读入图像尺寸相同的纯黑图像）、numpy.asarray（将普通数组转为NumpyArray）、numpy.copy（复制图像）、numpy.reshape（各种转换）</p><p>​    </p><p>函数解释：</p><p>​        (1) numpy.array(object, dtype=None, *, copy=True, order=’K’, subok=False, ndmin=0, like=None)</p><p>​        object 数组</p><p>​        dtype 数据类型 </p><p>​        (2) numpy.zeros(shape, dtype=float, order=‘C’, *, like=None) </p><p>​        数组维度</p><p>​        dtype 数据类型</p><p>​        (3) numpy.asarray(a, dtype=None, order=None, *, like=None) </p><p>​        数组对象</p><p>​        dtype 数据类型</p><p>​        (4) numpy.reshape(a, newshape, order=’C’)</p><p>​        数组维度</p><p>​        dtype 数据类型</p><p><strong>③ 概念</strong></p><p>​    opencv-python中一切图像数据皆numpy array</p><p>​    创建图像就是创建numpy array</p><p><strong>④ 创建图像</strong></p><p>​    1）导入import numpy as np</p><p>​    2）创建np.array([[1, 2],[3, 4]], dtype=np.uint8)</p><p>​    </p><p>​    3）创建图像最常用函数：</p><p>​        np.zeros -&gt;创建一个黑色背景图像</p><p>​        np.zeros_like-&gt;创建一个与输入图像大小一致的黑色背景图像</p><p>​        np.ones创建一个全部像素值是1的图像</p><p><strong>⑤ 图像赋值</strong></p><p>​    图像赋值就是给numpy array数组赋值</p><p>​    m = np.zeros((3, 3, 3), dtype=uint8)</p><p>​    m[:] = 255，创建数组m，然后赋值为255(白色)</p><p>​    m[:] = (255,0,0)，创建数组m，然后赋值为(255,0,0)蓝色</p><p>​    h,w,c = img.shape，h,w,c分别为高，宽，通道</p><h2 id="07-图像像素的读写操作"><a href="#07-图像像素的读写操作" class="headerlink" title="07 图像像素的读写操作"></a>07 图像像素的读写操作</h2><p> <strong>理解像素：</strong></p><p>​    像素实际大小：dpi x inches = 像素总数</p><p>​    术语dpi：每英寸的点数目，96dpi – 针对打印</p><p>​    术语ppi: 每英寸的像素数目 – 针对图像分辨率</p><p><strong>OpenCV中像素</strong></p><p>​    矩阵表示每个像素信息</p><p>​    像素遍历本质就是numpy数组访问</p><p>​    <strong>假设变量image</strong></p><p>​        获取图像维度信息: image.shape</p><p>​        图像访问像素: image[row, col]</p><p>​        图像赋值像素: image[row, col] = (b,g,r)</p><p>​        读写像素，彩色图像：</p><p>​            b, g, r = image[row, col]</p><p>​            image[row, col] = (255-b, 255-g, 255-r)</p><p>​        读写像素，灰度图像：</p><p>​            pv = image[row, col]</p><p>​            image[row, col] = 255-pv</p><h2 id="08-图像算数操作"><a href="#08-图像算数操作" class="headerlink" title="08 图像算数操作"></a>08 图像算数操作</h2><p><strong>图像读取后是一个数组，它可以进行基本的算术操作</strong></p><p><strong>加</strong> cv.add(src1, src2[, dst[, mask[, dtype]]]) -&gt;dst</p><p><strong>减</strong> cv.subtract(src1,src2[,dst[,mask[,dtype]]])-&gt;dst</p><p><strong>mask</strong>参数控制操作范围，操作范围内正常加减，范围外全为0</p><p><strong>乘</strong> cv.multiply(src1,src2[,dst[,scale[,dtype]]])-&gt;dst</p><p><strong>除</strong> cv.divide(src1, src2[, dst[, scale[, dtype]]])-&gt;dst</p><p><strong>参数说明</strong> src1 &amp; src2表示图像</p><p><strong>加法运算保证不越界的方法</strong>：saturate(src1 + src2)-》0~255。saturate_cast函数的作用即是：当运算完之后，结果为负，则转为0，结果超出255，则为255。</p><p><strong>图像算术运算要求</strong>：图像大小通道数目一致</p><p><strong>加权加法</strong>：added_wt_img = cv2.addWeighted(img1, 0.6, img2, 0.4, 0)</p><p><strong>mask</strong>表示模板（蒙版），为矩阵形式，矩阵中0，表示不取该位置的值，1表示保留该位置的值。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HappyBirthday!</title>
       <link href="/posts/9209df64.html"/>
       <url>/posts/9209df64.html</url>
