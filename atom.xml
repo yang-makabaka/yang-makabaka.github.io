@@ -6,7 +6,7 @@
   <link href="https://yang-makabaka.github.io/atom.xml" rel="self"/>
   
   <link href="https://yang-makabaka.github.io/"/>
-  <updated>2022-12-14T14:20:17.223Z</updated>
+  <updated>2022-12-16T15:05:25.745Z</updated>
   <id>https://yang-makabaka.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>OpenCV——3</title>
+    <link href="https://yang-makabaka.github.io/posts/b28fd6df.html"/>
+    <id>https://yang-makabaka.github.io/posts/b28fd6df.html</id>
+    <published>2022-12-16T14:59:34.000Z</published>
+    <updated>2022-12-16T15:05:25.745Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="09滚动条操作"><a href="#09滚动条操作" class="headerlink" title="09滚动条操作"></a>09滚动条操作</h2><h4 id="Callback回调基本流程"><a href="#Callback回调基本流程" class="headerlink" title="Callback回调基本流程"></a>Callback回调基本流程</h4><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/f5830e4e8f2ee9c9.png" alt=""></p><p>引用举例：你到一个商店买东西，刚好你要的东西没有货，于是你在店员那里留下了你的电话，过了几天店里有货了，店员就打了你的电话，然后你接到电话后就到店里去取了货。在这个例子里，你的电话号码就叫回调函数，你把电话留给店员就叫登记回调函数，店里后来有货了叫做触发了回调关联的事件，店员给你打电话叫做调用回调函数，你到店里去取货叫做响应回调事件。回答完毕。 (链接：<a href="https://www.zhihu.com/question/19801131">https://www.zhihu.com/question/19801131</a>)</p><p>先注册后使用</p><h4 id="事件响应函数"><a href="#事件响应函数" class="headerlink" title="事件响应函数"></a>事件响应函数</h4><p>•<code>typedef void(* cv::TrackbarCallback) (int pos//滑块位置, void *userdata//用户数据，可不写)</code></p><p>•完成事件响应函数的声明与实现</p><p><code>•def trackbar_callback (pos):</code></p><p>​    <code>print(pos)</code></p><h4 id="创建窗口函数"><a href="#创建窗口函数" class="headerlink" title="创建窗口函数"></a>创建窗口函数</h4><p>•<code>cv.namedWindow(winname [, flags]) -&gt; None</code></p><p>•参数: winname表示窗口标题</p><p>•参数flags支持的flag有：</p><p>​    WINDOW_NORMAL – 可以调整窗口大小，图片很大时使用</p><p>​    WINDOW_AUTOSIZE – 根据图像大小自动适应，不可调</p><p>​    WINDOW_KEEPRATIO – 可以保持比例窗口，调整大小</p><h4 id="调整图像亮度"><a href="#调整图像亮度" class="headerlink" title="调整图像亮度"></a>调整图像亮度</h4><p>•RGB值表示亮度</p><p>•RGB(0, 0,0) 黑色 -&gt; RGB(255,255,255)白色，通过调整像素值来调整亮度</p><p>•add函数支持图像+图像与图像+常量方式</p><p>•subtract函数支持图像+图像与图像+常量方式</p><p>•动态调整，基于滚动条修改常量值，实现动态修改图像亮度并刷新显示</p><p>•创建图像窗口</p><p>•创建滚动条组件</p><p>•在窗口显示图像</p><p>•拖拉滚动条修改图像亮度</p><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/00948d7782ea3538.png" alt=""></p><h2 id="10键盘响应操作"><a href="#10键盘响应操作" class="headerlink" title="10键盘响应操作"></a>10键盘响应操作</h2><h4 id="键盘响应事件"><a href="#键盘响应事件" class="headerlink" title="键盘响应事件"></a>键盘响应事件</h4><p>•cv.waitKey( [, delay] ) -&gt;retval</p><p>​    delay如果没有声明或者delay=0,表示一直阻塞</p><p>​    delay大于0，表示阻塞指定毫秒数</p><p>​    Retval返回的对应键盘键值，注意:在不同的操作系统中可能会有差异</p><p>​    典型的retval = 27是ESC按键</p><h4 id="响应不同的键盘操作"><a href="#响应不同的键盘操作" class="headerlink" title="响应不同的键盘操作"></a>响应不同的键盘操作</h4><p>•检查返回键值，根据不同键值完成不同操作</p><p>•推荐使用if-elif-else, switch-case方式python3.10支持</p><p>if <expr>:</p>  <statement(s)><p>elif <expr>:</p>  <statement(s)><p>elif <expr>:</p>  <statement(s)><p>  …</p><p>else:</p>  <statement(s)><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/50a6e7845c9ca862.png" alt=""></p><p>•按ESC推出</p><p>•按1显示HSV图像</p><p>•按2显示YCrCb</p><p>•按3显示RGB图像</p><p>•按0恢复原图BGR显示</p><h2 id="11自带颜色表操作"><a href="#11自带颜色表操作" class="headerlink" title="11自带颜色表操作"></a>11自带颜色表操作</h2><p>查找表（LUT，look up table）</p><p>优势：预计算，空间换时间，避免重复计算，节约计算时间</p><h4 id="Gamma校正"><a href="#Gamma校正" class="headerlink" title="Gamma校正"></a>Gamma校正</h4><p>•公式p(x, y)表示输入图像像素值</p><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/ed4eef24080f88f8.png" alt=""></p><p>•像素值取值范围在0~255之间，每一个值对应一个输出值，这样映射关系，可以先建立查找表LUT</p><p>•根据输入得像素值作为index，在LUT中直接映射读取得到gamma校正之后得值</p><p>•对256x256大小的图像，计算量对比：</p><p>•不应用找表计算gamma - 65536次，</p><p>•应用查找表计算gamma – 256次</p><h4 id="OpenCV中LUT支持"><a href="#OpenCV中LUT支持" class="headerlink" title="OpenCV中LUT支持"></a>OpenCV中LUT支持</h4><p>•cv.applyColorMap(src, colormap[, dst]) -&gt;dst</p><p>•第一个参数输入图像</p><p>•第二个参数是颜色表</p><p>•dst返回图像</p><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/cab94f7eab22206d.png" alt=""></p><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/3948b00eac3be427.png" alt=""></p><p>系统查找表使用cv.applyColorMap，自定义查找表使用cv.LUT</p><p>自定义colormap大小必须为256x1</p><h2 id="12通道分离与合并"><a href="#12通道分离与合并" class="headerlink" title="12通道分离与合并"></a>12通道分离与合并</h2><h4 id="通道分类与合并"><a href="#通道分类与合并" class="headerlink" title="通道分类与合并"></a>通道分类与合并</h4><p>RGB/HSV彩色通道分离为单独通道</p><p>针对不同通道使用不同阈值提取mask</p><h4 id="分离函数"><a href="#分离函数" class="headerlink" title="分离函数"></a>分离函数</h4><p>•通道分离函数cv.split(m[, mv]) -&gt;mv</p><p>•m表示输入图像,必须是多通道图像</p><p>•mv表示输出分离的单通道数组</p><h4 id="合并与混合"><a href="#合并与混合" class="headerlink" title="合并与混合"></a>合并与混合</h4><p>•cv.merge(mv[, dst])-&gt;dst</p><p>​    mv表示各个通道</p><p>•cv.mixChannels(src, dst, fromTo)-&gt;dst</p><p>​    src表示输入多通道图像</p><p>​    fromTo表示通道索引</p><p>​    dst表示返回结果</p><h4 id="通道阈值"><a href="#通道阈值" class="headerlink" title="通道阈值"></a>通道阈值</h4><p>•cv.inRange( src, lowerb, upperb[, dst]) -&gt; dst</p><p>转为二值图</p><p>•其中src是输入图像</p><p>•Lowerb是低值</p><p>•Upperb是高值</p><p>•dst = (lowerb &lt; src &lt; upperb)</p><p>范围内的为1（白色），范围外的为0（黑色）</p><p><img src="https://s3.bmp.ovh/imgs/2022/12/16/506392096b0f7837.png" alt=""></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;09滚动条操作&quot;&gt;&lt;a href=&quot;#09滚动条操作&quot; class=&quot;headerlink&quot; title=&quot;09滚动条操作&quot;&gt;&lt;/a&gt;09滚动条操作&lt;/h2&gt;&lt;h4 id=&quot;Callback回调基本流程&quot;&gt;&lt;a href=&quot;#Callback回调基本流程&quot; cla</summary>
+      
+    
+    
+    
+    
+    <category term="笔记" scheme="https://yang-makabaka.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>OpenCV——2</title>
     <link href="https://yang-makabaka.github.io/posts/c588e649.html"/>
     <id>https://yang-makabaka.github.io/posts/c588e649.html</id>
     <published>2022-12-14T14:19:03.000Z</published>
-    <updated>2022-12-14T14:20:17.223Z</updated>
+    <updated>2022-12-14T14:20:46.842Z</updated>
     
     <content type="html"><![CDATA[<h2 id="05-图像色彩空间转换"><a href="#05-图像色彩空间转换" class="headerlink" title="05 图像色彩空间转换"></a>05 图像色彩空间转换</h2><p><strong>常见的色彩空间：HSV、RGB、YCrCb</strong></p><p>​    RGB色彩空间，设备独立</p><p>​    HSV色彩空间，对计算机友好，区分各种色彩</p><p>​    YCrCb, Y分量表示信息，CrCb可以被压缩</p><p>​    RGB是计算机显示器的标准支持色彩系统</p><p>​    RGB的取值范围0~255</p><p>​    HSV取值范围H（色调）:0°~360°，S（饱和度）:0~255，V（明度）:0~255</p><p><strong>从一个色彩空间转换到另外一个色彩空间</strong>要考虑：</p><p>​    信息传递与损失过程、可逆与不可逆</p><p><strong>函数与参数</strong></p><p>​    cv.cvtColor(<strong>src</strong>,<strong>code</strong>[,dst[,dstCn]])-&gt;dst</p><p>​    <strong>·</strong> src表示输入图像, 类型CV_8U、CV_32F</p><p>​    <strong>·</strong> code表示， </p><p>​        cv::COLOR_BGR2RGB = 4</p><p>​        cv::COLOR_BGR2GRAY = 6</p><p>​        cv::COLOR_GRAY2BGR = 8</p><p>​        cv::COLOR_BGR2HSV = 40</p><p>​        例：img2 = cv.cvtColor(img1, cv.COLOR_BGR2GRAY)</p><p>​        注：当彩色图像转为灰度图像，由三通道转为单通道，其部分信息永久消失，再次转回BGR后图像变为三通道，但仍为灰色。</p><h2 id="06-图像对象的创建与赋值"><a href="#06-图像对象的创建与赋值" class="headerlink" title="06 图像对象的创建与赋值"></a>06 图像对象的创建与赋值</h2><p><strong>① OpenCV-Python支持的数据类型</strong>：np.uint8（默认）、np.float32（方便计算）、np.int32、np.int64</p><p><strong>② Numpy常用函数：</strong></p><p>​    numpy.array、numpy.zeros、numpy.zeros_like（快速产生与读入图像尺寸相同的纯黑图像）、numpy.asarray（将普通数组转为NumpyArray）、numpy.copy（复制图像）、numpy.reshape（各种转换）</p><p>​    </p><p>函数解释：</p><p>​        (1) numpy.array(object, dtype=None, *, copy=True, order=’K’, subok=False, ndmin=0, like=None)</p><p>​        object 数组</p><p>​        dtype 数据类型 </p><p>​        (2) numpy.zeros(shape, dtype=float, order=‘C’, *, like=None) </p><p>​        数组维度</p><p>​        dtype 数据类型</p><p>​        (3) numpy.asarray(a, dtype=None, order=None, *, like=None) </p><p>​        数组对象</p><p>​        dtype 数据类型</p><p>​        (4) numpy.reshape(a, newshape, order=’C’)</p><p>​        数组维度</p><p>​        dtype 数据类型</p><p><strong>③ 概念</strong></p><p>​    opencv-python中一切图像数据皆numpy array</p><p>​    创建图像就是创建numpy array</p><p><strong>④ 创建图像</strong></p><p>​    1）导入import numpy as np</p><p>​    2）创建np.array([[1, 2],[3, 4]], dtype=np.uint8)</p><p>​    </p><p>​    3）创建图像最常用函数：</p><p>​        np.zeros -&gt;创建一个黑色背景图像</p><p>​        np.zeros_like-&gt;创建一个与输入图像大小一致的黑色背景图像</p><p>​        np.ones创建一个全部像素值是1的图像</p><p><strong>⑤ 图像赋值</strong></p><p>​    图像赋值就是给numpy array数组赋值</p><p>​    m = np.zeros((3, 3, 3), dtype=uint8)</p><p>​    m[:] = 255，创建数组m，然后赋值为255(白色)</p><p>​    m[:] = (255,0,0)，创建数组m，然后赋值为(255,0,0)蓝色</p><p>​    h,w,c = img.shape，h,w,c分别为高，宽，通道</p><h2 id="07-图像像素的读写操作"><a href="#07-图像像素的读写操作" class="headerlink" title="07 图像像素的读写操作"></a>07 图像像素的读写操作</h2><p> <strong>理解像素：</strong></p><p>​    像素实际大小：dpi x inches = 像素总数</p><p>​    术语dpi：每英寸的点数目，96dpi – 针对打印</p><p>​    术语ppi: 每英寸的像素数目 – 针对图像分辨率</p><p><strong>OpenCV中像素</strong></p><p>​    矩阵表示每个像素信息</p><p>​    像素遍历本质就是numpy数组访问</p><p>​    <strong>假设变量image</strong></p><p>​        获取图像维度信息: image.shape</p><p>​        图像访问像素: image[row, col]</p><p>​        图像赋值像素: image[row, col] = (b,g,r)</p><p>​        读写像素，彩色图像：</p><p>​            b, g, r = image[row, col]</p><p>​            image[row, col] = (255-b, 255-g, 255-r)</p><p>​        读写像素，灰度图像：</p><p>​            pv = image[row, col]</p><p>​            image[row, col] = 255-pv</p><h2 id="08-图像算数操作"><a href="#08-图像算数操作" class="headerlink" title="08 图像算数操作"></a>08 图像算数操作</h2><p><strong>图像读取后是一个数组，它可以进行基本的算术操作</strong></p><p><strong>加</strong> cv.add(src1, src2[, dst[, mask[, dtype]]]) -&gt;dst</p><p><strong>减</strong> cv.subtract(src1,src2[,dst[,mask[,dtype]]])-&gt;dst</p><p><strong>mask</strong>参数控制操作范围，操作范围内正常加减，范围外全为0</p><p><strong>乘</strong> cv.multiply(src1,src2[,dst[,scale[,dtype]]])-&gt;dst</p><p><strong>除</strong> cv.divide(src1, src2[, dst[, scale[, dtype]]])-&gt;dst</p><p><strong>参数说明</strong> src1 &amp; src2表示图像</p><p><strong>加法运算保证不越界的方法</strong>：saturate(src1 + src2)-》0~255。saturate_cast函数的作用即是：当运算完之后，结果为负，则转为0，结果超出255，则为255。</p><p><strong>图像算术运算要求</strong>：图像大小通道数目一致</p><p><strong>加权加法</strong>：added_wt_img = cv2.addWeighted(img1, 0.6, img2, 0.4, 0)</p><p><strong>mask</strong>表示模板（蒙版），为矩阵形式，矩阵中0，表示不取该位置的值，1表示保留该位置的值。</p>]]></content>
     
@@ -421,29 +443,6 @@
       
       
     <summary type="html">&lt;div class=&quot;tag link&quot;&gt;&lt;a class=&quot;link-card&quot; title=&quot;DataWhale李宏毅机器学习&quot; href=&quot;https://linklearner.com/datawhale-homepage/#/learn/detail/93&quot;&gt;&lt;div</summary>
-      
-    
-    
-    
-    
-    <category term="笔记" scheme="https://yang-makabaka.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>李宏毅机器学习-P4网络设计的技巧</title>
-    <link href="https://yang-makabaka.github.io/posts/7ada666d.html"/>
-    <id>https://yang-makabaka.github.io/posts/7ada666d.html</id>
-    <published>2022-09-20T13:36:00.000Z</published>
-    <updated>2022-09-20T13:40:23.787Z</updated>
-    
-    <content type="html"><![CDATA[<span class='p center logo large'>待填坑。。。</span><div class="tag link"><a class="link-card" title="DataWhale李宏毅机器学习" href="https://github.com/datawhalechina/leeml-notes"><div class="left"><img src="https://linklearner.com/datawhale-homepage/#/favicon.ico"/></div><div class="right"><p class="text">DataWhale李宏毅机器学习</p><p class="url">https://github.com/datawhalechina/leeml-notes</p></div></a></div>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;span class=&#39;p center logo large&#39;&gt;待填坑。。。&lt;/span&gt;
-&lt;div class=&quot;tag link&quot;&gt;&lt;a class=&quot;link-card&quot; title=&quot;DataWhale李宏毅机器学习&quot; href=&quot;https://github.com</summary>
       
     
     
