@@ -245,6 +245,13 @@
 
   
   <url>
+    <loc>https://yang-makabaka.github.io/tags/CV/</loc>
+    <lastmod>2022-12-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://yang-makabaka.github.io/tags/%E6%9D%82%E6%96%87/</loc>
     <lastmod>2022-12-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -253,13 +260,6 @@
   
   <url>
     <loc>https://yang-makabaka.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2022-12-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yang-makabaka.github.io/tags/CV/</loc>
     <lastmod>2022-12-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
