@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>交汇路口减速慢行</title>
+      <link href="/posts/undefined.html"/>
+      <url>/posts/undefined.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="Planning-交汇路口减速慢行"><a href="#Planning-交汇路口减速慢行" class="headerlink" title="Planning 交汇路口减速慢行"></a>Planning 交汇路口减速慢行</h1><p>百度Apollo自动驾驶仿真平台9.0版本Planning模块相关内容</p><h2 id="场景介绍：主车在城市道路行驶时，行驶至交汇路口时需降低速度至5米-秒，并在过后恢复正常速度。"><a href="#场景介绍：主车在城市道路行驶时，行驶至交汇路口时需降低速度至5米-秒，并在过后恢复正常速度。" class="headerlink" title="场景介绍：主车在城市道路行驶时，行驶至交汇路口时需降低速度至5米/秒，并在过后恢复正常速度。"></a>场景介绍：主车在城市道路行驶时，行驶至交汇路口时需降低速度至5米/秒，并在过后恢复正常速度。</h2><p>通过打开“Junction”显示按钮，得知该路口（下图中蓝色框内区域）为junction的道路类型。</p><p><img src="https://s2.loli.net/2023/11/29/BdJVYmQnquWLj2e.png" alt="Untitled.png"></p><h1 id="1-新增-traffic-rule-插件"><a href="#1-新增-traffic-rule-插件" class="headerlink" title="1.新增  traffic rule 插件"></a>1.新增  traffic rule 插件</h1><h3 id="按下面链接完成"><a href="#按下面链接完成" class="headerlink" title="按下面链接完成"></a>按下面链接完成</h3><p><strong><a href="https://apollo.baidu.com/community/article/1121">https://apollo.baidu.com/community/article/1121</a></strong></p><h1 id="2-代码修改"><a href="#2-代码修改" class="headerlink" title="2.代码修改"></a>2.代码修改</h1><h3 id="（1）pnc-junction-overlaps改为junction-overlaps"><a href="#（1）pnc-junction-overlaps改为junction-overlaps" class="headerlink" title="（1）pnc_junction_overlaps改为junction_overlaps"></a><strong>（1）pnc_junction_overlaps改为junction_overlaps</strong></h3><p><strong>modules/planning/trafﬁc_rules/region_speed_limit/region_speed_limit.cc</strong></p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">原： <span class="keyword">const</span> <span class="attr">std</span>::vector&lt;<span class="title class_">PathOverlap</span>&gt; &amp; pnc_junction_overlaps </span><br><span class="line">= reference_line_info-&gt; reference_line ( ) . map_path ( ) . pnc_junction_overlaps ( ) ; </span><br><span class="line"></span><br><span class="line">修改为： <span class="keyword">const</span> <span class="attr">std</span>::vector&lt;<span class="title class_">PathOverlap</span>&gt; &amp; pnc_junction_overlaps </span><br><span class="line">= reference_line_info-&gt; reference_line ( ) . map_path ( ) . junction_overlaps () ;</span><br></pre></td></tr></table></figure><p><img src="https://s2.loli.net/2023/11/29/FNIAMkVvmcjxb4z.png" alt="Untitled 1.png"></p><h3 id="（2）TrafficRule改为apollo-planning-TrafficRule"><a href="#（2）TrafficRule改为apollo-planning-TrafficRule" class="headerlink" title="（2）TrafficRule改为apollo::planning::TrafficRule"></a><strong>（2）TrafficRule改为apollo::planning::TrafficRule</strong></h3><p><strong>modules/planning/traffic_rules/region_speed_limit/plugin_region_speed_limit_description.xml</strong></p><p><img src="https://s2.loli.net/2023/11/29/oY3X2WCize1gZST.png" alt="Untitled 2.png"></p><p>注：修改后不要忘了保存</p><h3 id="（3）编译"><a href="#（3）编译" class="headerlink" title="（3）编译"></a>（3）编译</h3><p>在打开dreamview的终端执行下面代码</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buildtool build -p modules/planning/traffic_rules/region_speed_limit/</span><br></pre></td></tr></table></figure><h3 id="4-调参"><a href="#4-调参" class="headerlink" title="(4)调参"></a>(4)调参</h3><p>将 <strong>limit_speed</strong> 由 <strong>15.0</strong> 改为 <strong>3.0</strong></p><p>modules/planning/traffic_rules/region_speed_limit/conf/region_speed_limit.pb.txt</p><p><img src="https://s2.loli.net/2023/11/29/CsbAzlVgQqhceu9.png" alt="Untitled 3.png"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Apollo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Perception训练与部署——环境配置</title>
       <link href="/posts/1cc8f882.html"/>
       <url>/posts/1cc8f882.html</url>
